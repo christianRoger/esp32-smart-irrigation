@@ -14,8 +14,8 @@ L'ESP32-S3 rappresenta l'unità centrale di controllo e coordina l'acquisizione 
 
 ```text
                          ┌─────────────────────┐
-                         │      ESP32-S3        │
-                         │   MCU Dual-Core      │
+                         │      ESP32-S3       │
+                         │   MCU Dual-Core     │
                          └──────────┬──────────┘
                                     │
           ┌─────────────────────────┼─────────────────────────┐
@@ -24,11 +24,11 @@ L'ESP32-S3 rappresenta l'unità centrale di controllo e coordina l'acquisizione 
    ┌─────────────┐           ┌─────────────┐           ┌─────────────┐
    │   SENSORI   │           │  ATTUATORI  │           │     UI      │
    ├─────────────┤           ├─────────────┤           ├─────────────┤
-   │ Soil ×2     │           │ Pompa 1      │           │ ST7789      │
-   │ DHT11       │           │ Pompa 2      │           │ XPT2046     │
-   │ HC-SR04     │           │ Pozzo        │           │ Touch       │
-   │ DS3231      │           │ Buzzer       │           │             │
-   └─────────────┘           │ LED ×2       │           └─────────────┘
+   │ Soil ×2     │           │ Pompa 1     │           │ ST7789      │
+   │ DHT11       │           │ Pompa 2     │           │ XPT2046     │
+   │ HC-SR04     │           │ Pozzo       │           │ Touch       │
+   │ DS3231      │           │ Buzzer      │           │             │
+   └─────────────┘           │ LED ×2      │           └─────────────┘
                              └─────────────┘
 
                          ┌─────────────────────┐
