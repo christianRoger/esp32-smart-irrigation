@@ -354,3 +354,13 @@ L'obiettivo è realizzare un sistema di irrigazione capace non solo di eseguire 
 Questo repository rappresenta una sintesi delle competenze applicate nello sviluppo del progetto, tra cui **elettronica, firmware embedded, automazione, IoT, networking, interfacce utente e integrazione hardware/software**.
 
 Il codice sorgente non viene pubblicato; la documentazione è fornita per illustrare l'architettura, le funzionalità e le principali scelte tecniche del sistema.
+
+## Documentazione tecnica
+
+Per una descrizione dettagliata dell'architettura, dell'hardware, del firmware e delle funzionalità del sistema:
+
+👉 [Documentazione tecnica](docs/DOCUMENTAZIONE.md)
+
+### Architettura del sistema
+
+![System Architecture](docs/architecture.svg)
