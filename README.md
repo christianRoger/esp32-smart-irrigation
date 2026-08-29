@@ -51,6 +51,33 @@ Il controller gestisce:
 | Affidabilità | Hardware Watchdog |
 | Logica di controllo | Automatica / Manuale / SMART |
 
+
+## Aspetti principali del progetto
+
+### 🤖 Logica SMART adattiva
+
+Il sistema utilizza i dati di umidità del terreno e il tempo di funzionamento delle pompe per adattare dinamicamente la durata dei cicli di irrigazione.
+
+### 🌐 Sistema IoT completo
+
+Il controller integra Wi-Fi, Web Server, Telegram, ESP-NOW e OpenWeatherMap, permettendo il monitoraggio e il controllo sia locale che remoto.
+
+### ⚙️ Firmware modulare
+
+Il firmware è stato riorganizzato da uno sketch monolitico in moduli C++ separati, con una struttura orientata alla manutenzione e all'evoluzione del progetto.
+
+### 🖥️ Interfaccia embedded
+
+L'interfaccia touch ST7789 permette di visualizzare lo stato del sistema, gestire la configurazione, controllare manualmente l'irrigazione e visualizzare gli allarmi.
+
+### 🔄 Gestione remota e OTA
+
+Il Web Server integrato permette configurazione, diagnostica, gestione dei log e aggiornamento del firmware tramite OTA.
+
+### 🛡️ Affidabilità e sicurezza
+
+Il sistema integra Watchdog, autenticazione, hashing SHA-256, protezione CSRF, rate limiting e gestione della configurazione persistente tramite NVS.
+
 ## Hardware
 
 ### Controller principale
