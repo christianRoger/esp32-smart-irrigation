@@ -169,6 +169,8 @@ Il firmware integra diversi meccanismi progettati per migliorare l'affidabilità
 
 ## Architettura
 
+![System Architecture](docs/architecture.svg)
+
 Il firmware è stato inizialmente sviluppato come uno sketch monolitico di grandi dimensioni.
 
 Con l'evoluzione del progetto, l'architettura software è stata riorganizzata in moduli funzionali, separando le principali responsabilità del sistema.
