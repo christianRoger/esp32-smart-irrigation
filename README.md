@@ -249,6 +249,19 @@ Il progetto dimostra esperienza pratica nelle seguenti aree:
 * Integrazione hardware/software
 
 ---
+## Principali sfide tecniche
+
+Durante lo sviluppo del sistema sono state affrontate diverse problematiche tecniche, tra cui:
+
+- Modularizzazione di un firmware inizialmente sviluppato come sketch monolitico di grandi dimensioni.
+- Integrazione di più sensori e attuatori con ESP32-S3.
+- Coordinamento in tempo reale tra interfaccia utente, acquisizione dei sensori, controllo dell'irrigazione e servizi di rete.
+- Gestione della configurazione persistente tramite NVS.
+- Implementazione dell'aggiornamento firmware OTA tramite Web Server integrato.
+- Comunicazione remota tramite Wi-Fi, Telegram ed ESP-NOW.
+- Calibrazione e gestione dell'acquisizione dei sensori.
+- Implementazione di watchdog, autenticazione, protezione CSRF e rate limiting.
+- Sviluppo di una logica SMART adattiva basata sul feedback dell'umidità del terreno.
 
 ## Architettura hardware e software
 
