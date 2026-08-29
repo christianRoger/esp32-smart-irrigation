@@ -2,9 +2,9 @@
 
 ## 1. Panoramica del progetto
 
-**ESP32 Smart Irrigation** è un sistema IoT per il controllo e la gestione automatizzata dell'irrigazione, sviluppato attorno a un microcontrollore **ESP32-S3**.
+**ESP32 Smart Irrigation** è un sistema embedded/IoT per il controllo e la gestione automatizzata dell'irrigazione, sviluppato attorno a un microcontrollore **ESP32-S3**.
 
-Il sistema integra controllo hardware, acquisizione dati da sensori, interfaccia grafica touch, connettività di rete e logiche di irrigazione adattive.
+Il sistema integra acquisizione dati da sensori, controllo degli attuatori, interfaccia grafica touch, connettività di rete, comunicazione remota e logiche adattive per la gestione dell'irrigazione.
 
 L'obiettivo del progetto è realizzare un sistema in grado di:
 
@@ -16,23 +16,23 @@ L'obiettivo del progetto è realizzare un sistema in grado di:
 * fornire un'interfaccia locale tramite display touch;
 * consentire il controllo remoto tramite Web Server e Telegram;
 * comunicare con dispositivi remoti tramite ESP-NOW;
-* utilizzare dati meteorologici per ottimizzare l'irrigazione;
+* utilizzare dati meteorologici per supportare le decisioni di irrigazione;
 * aggiornare il firmware tramite OTA;
-* adattare automaticamente la durata dell'irrigazione attraverso la logica SMART.
+* adattare la durata dei cicli di irrigazione attraverso la logica SMART.
 
-> **Nota:** il codice sorgente non è incluso nel repository. Il progetto è pubblicato come portfolio tecnico per documentare architettura, funzionalità, integrazione hardware/software e competenze sviluppate.
+> **Nota:** il codice sorgente completo non è incluso nel repository. Il progetto è pubblicato come **portfolio tecnico**, con l'obiettivo di documentare l'architettura, le funzionalità, l'integrazione hardware/software e le principali soluzioni tecniche adottate.
 
 ---
 
 # 2. Architettura del sistema
 
-Il sistema è composto da tre aree principali:
+L'architettura è organizzata in tre livelli principali:
 
 1. **Hardware e periferiche**
 2. **Firmware embedded ESP32-S3**
 3. **Servizi e dispositivi esterni**
 
-L'ESP32-S3 rappresenta il nodo centrale del sistema e coordina l'acquisizione dei dati, la logica di controllo, l'interfaccia utente e le comunicazioni.
+L'ESP32-S3 rappresenta l'unità centrale del sistema e coordina l'acquisizione dei dati, l'elaborazione della logica di controllo, l'interfaccia utente e le comunicazioni.
 
 ![System Architecture](architecture.svg)
 
@@ -40,21 +40,21 @@ L'ESP32-S3 rappresenta il nodo centrale del sistema e coordina l'acquisizione de
 
 ## 2.1 Architettura di deployment
 
-### Hardware / periferiche
+### Hardware e periferiche
 
-Il sistema hardware comprende:
+Il sistema comprende:
 
-* TFT ST7789 320×240;
+* display TFT ST7789 320×240;
 * touch resistivo XPT2046;
-* sensori di umidità del terreno;
-* DHT11;
+* due sensori di umidità del terreno;
+* sensore DHT11;
 * sensore ultrasonico HC-SR04;
 * RTC DS3231;
 * relè per le pompe;
-* relè del pozzo;
+* relè per il pozzo;
 * buzzer;
 * LED di stato;
-* pulsante per il reset della configurazione Wi-Fi.
+* pulsante dedicato al reset della configurazione Wi-Fi.
 
 ### ESP32-S3
 
@@ -64,15 +64,15 @@ Il microcontrollore esegue il firmware principale e gestisce:
 * controllo degli attuatori;
 * interfaccia grafica;
 * gestione della rete;
-* Web Server;
-* Telegram;
-* ESP-NOW;
+* Web Server embedded;
+* comunicazione Telegram;
+* comunicazione ESP-NOW;
 * logica SMART;
 * gestione della configurazione;
 * sicurezza;
 * watchdog.
 
-### Servizi esterni
+### Servizi e dispositivi esterni
 
 Il sistema può comunicare con:
 
@@ -80,7 +80,7 @@ Il sistema può comunicare con:
 * Telegram;
 * OpenWeatherMap;
 * dispositivi ESP-NOW remoti;
-* rete Wi-Fi / Internet.
+* rete Wi-Fi e Internet.
 
 La configurazione persistente viene memorizzata nella **NVS (Non-Volatile Storage)** dell'ESP32.
 
@@ -88,7 +88,7 @@ La configurazione persistente viene memorizzata nella **NVS (Non-Volatile Storag
 
 # 3. Hardware e pinout
 
-## 3.1 Tabella di collegamento
+## 3.1 Tabella dei collegamenti
 
 | Segnale          | GPIO | Funzione                  |
 | ---------------- | ---: | ------------------------- |
@@ -118,53 +118,52 @@ La configurazione persistente viene memorizzata nella **NVS (Non-Volatile Storag
 
 ### Note elettriche
 
-I relè utilizzano logica:
+I relè utilizzano una logica **active-low**:
 
 ```text
 RELAY_ON  = LOW
 RELAY_OFF = HIGH
 ```
 
-L'ingresso `ECHO_PIN` del sensore HC-SR04 deve essere adattato al livello logico compatibile con ESP32-S3, utilizzando un opportuno partitore di tensione quando necessario.
+L'uscita `ECHO` dell'HC-SR04 deve essere adattata al livello logico compatibile con l'ESP32-S3. Quando necessario, è quindi richiesto un opportuno partitore di tensione.
 
 ---
 
 # 4. Specifiche principali
 
-| Parametro                     | Valore                |
-| ----------------------------- | --------------------- |
-| Microcontrollore              | ESP32-S3 Dual-Core    |
-| Display                       | ST7789                |
-| Risoluzione                   | 320×240               |
-| Touch                         | XPT2046 resistivo     |
-| Sensori terreno               | 2 × ADC               |
-| Temperatura/umidità           | DHT11                 |
-| Livello serbatoio             | HC-SR04               |
-| RTC                           | DS3231                |
-| Comunicazione locale          | Wi-Fi / ESP-NOW       |
-| Controllo remoto              | Web Server / Telegram |
-| Servizio meteorologico        | OpenWeatherMap        |
-| Storage                       | NVS / Preferences     |
-| Aggiornamento                 | OTA                   |
-| Watchdog                      | 30 secondi            |
-| Numero massimo profili piante | 100                   |
+| Parametro              | Valore                |
+| ---------------------- | --------------------- |
+| Microcontrollore       | ESP32-S3 Dual-Core    |
+| Display                | ST7789                |
+| Risoluzione            | 320×240               |
+| Touch                  | XPT2046 resistivo     |
+| Sensori terreno        | 2 × ADC               |
+| Temperatura / umidità  | DHT11                 |
+| Livello serbatoio      | HC-SR04               |
+| RTC                    | DS3231                |
+| Comunicazione locale   | Wi-Fi / ESP-NOW       |
+| Controllo remoto       | Web Server / Telegram |
+| Servizio meteorologico | OpenWeatherMap        |
+| Storage                | NVS / Preferences     |
+| Aggiornamento firmware | OTA                   |
+| Watchdog               | 30 secondi            |
+| Profili piante         | Fino a 100            |
 
 ---
 
-# 5. Struttura software
+# 5. Architettura software
 
-Il firmware è stato inizialmente sviluppato come un unico sketch monolitico.
+Il firmware è stato inizialmente sviluppato come uno sketch monolitico di grandi dimensioni.
 
-Con l'evoluzione del progetto, il firmware è stato riorganizzato in moduli funzionali separati, con l'obiettivo di migliorare:
+Con l'evoluzione del progetto, il software è stato progressivamente riorganizzato in moduli funzionali separati, con l'obiettivo di migliorare:
 
 * leggibilità;
 * manutenzione;
 * separazione delle responsabilità;
 * riutilizzabilità;
 * debugging;
-* gestione delle dipendenze.
-
-La struttura logica del firmware è organizzata intorno a un header comune e a moduli specializzati.
+* gestione delle dipendenze;
+* possibilità di estensione futura.
 
 ## 5.1 Moduli principali
 
@@ -179,9 +178,9 @@ La struttura logica del firmware è organizzata intorno a un header comune e a m
 | `time.cpp`       | RTC, NTP e gestione dell'orario                   |
 | `wifi.cpp`       | Wi-Fi e WiFiManager                               |
 | `web.cpp`        | Web Server ed endpoint HTTP                       |
-| `cloud.cpp`      | OpenWeatherMap e configurazione cloud             |
+| `cloud.cpp`      | OpenWeatherMap e configurazione dei servizi cloud |
 | `espnow.cpp`     | Comunicazione ESP-NOW                             |
-| `plants.cpp`     | Profili delle piante                              |
+| `plants.cpp`     | Gestione dei profili delle piante                 |
 | `system.cpp`     | Watchdog, sicurezza, log e funzioni di sistema    |
 
 ---
@@ -190,7 +189,7 @@ La struttura logica del firmware è organizzata intorno a un header comune e a m
 
 ## `app.h`
 
-`app.h` rappresenta il punto comune di riferimento del firmware.
+`app.h` rappresenta l'header comune dell'architettura software.
 
 Contiene:
 
@@ -201,7 +200,7 @@ Contiene:
 * dichiarazioni `extern`;
 * prototipi delle funzioni.
 
-L'utilizzo di un header comune permette ai diversi moduli di condividere in modo controllato tipi, variabili e interfacce.
+L'utilizzo di un header comune consente ai diversi moduli di condividere in modo controllato tipi, variabili e interfacce.
 
 ---
 
@@ -209,20 +208,20 @@ L'utilizzo di un header comune permette ai diversi moduli di condividere in modo
 
 Contiene le definizioni effettive delle variabili globali dichiarate tramite `extern` in `app.h`.
 
-Questo approccio evita definizioni multiple durante il linking e centralizza lo stato globale del sistema.
+Questo approccio evita definizioni multiple durante la fase di linking e centralizza lo stato globale del sistema.
 
 ---
 
 ## `display.cpp`
 
-Gestisce l'interfaccia grafica del dispositivo.
+Gestisce l'interfaccia grafica locale del dispositivo.
 
 Responsabilità principali:
 
 * rendering delle schermate;
-* gestione touch;
+* gestione del touch;
 * navigazione;
-* swipe;
+* gesture swipe;
 * pulsanti;
 * animazioni;
 * schermate di configurazione;
@@ -234,7 +233,7 @@ Responsabilità principali:
 
 ## `hardware.cpp`
 
-Gestisce l'interazione diretta con l'hardware.
+Gestisce l'interazione diretta con le periferiche hardware.
 
 Comprende:
 
@@ -243,9 +242,10 @@ Comprende:
 * buzzer;
 * LED;
 * DHT11;
-* sensori;
+* sensori di umidità;
+* sensore ultrasonico;
 * letture GPIO;
-* sensore ultrasonico.
+* acquisizione dei segnali analogici.
 
 ---
 
@@ -278,7 +278,7 @@ Gestisce il sistema temporale:
 * gestione del tempo di sistema;
 * formattazione dell'orario.
 
-Il modulo contiene inoltre alcune funzioni relative alla gestione dei comandi Telegram.
+Il modulo supporta inoltre le funzionalità temporali utilizzate dalle altre parti del firmware.
 
 ---
 
@@ -300,7 +300,7 @@ Implementa il Web Server embedded.
 
 Il browser può essere utilizzato per:
 
-* monitoraggio;
+* monitoraggio del sistema;
 * configurazione;
 * controllo manuale;
 * gestione dell'irrigazione;
@@ -309,21 +309,24 @@ Il browser può essere utilizzato per:
 * gestione delle piante;
 * configurazione SMART;
 * gestione dei log;
-* aggiornamento OTA.
+* aggiornamento OTA;
+* reset del sistema.
 
 ---
 
 ## `cloud.cpp`
 
-Gestisce l'integrazione con servizi esterni.
+Gestisce l'integrazione con i servizi esterni.
 
 In particolare:
 
 * OpenWeatherMap;
-* configurazione Telegram;
-* configurazione meteo;
-* salvataggio delle credenziali nella NVS;
-* aggiornamento delle informazioni meteorologiche.
+* configurazione dei servizi cloud;
+* configurazione meteorologica;
+* gestione delle informazioni meteorologiche;
+* gestione delle configurazioni persistenti correlate.
+
+Le credenziali e i parametri sensibili non vengono pubblicati nel repository.
 
 ---
 
@@ -331,7 +334,9 @@ In particolare:
 
 Implementa la comunicazione tramite **ESP-NOW**.
 
-Il modulo permette di ricevere dati da dispositivi ESP32 remoti senza richiedere una connessione TCP/IP tradizionale tra i dispositivi.
+Il modulo permette di ricevere dati da dispositivi ESP remoti senza richiedere una connessione TCP/IP tradizionale tra i dispositivi.
+
+Questa architettura permette di estendere il sistema con nodi distribuiti.
 
 ---
 
@@ -345,22 +350,22 @@ Il sistema supporta fino a:
 MAX_PLANTS = 100
 ```
 
-Ogni profilo può essere utilizzato per associare parametri specifici alla gestione dell'irrigazione.
+I profili possono essere utilizzati per associare parametri specifici alla gestione dell'irrigazione.
 
 ---
 
 ## `system.cpp`
 
-Contiene le funzionalità di sistema:
+Contiene le principali funzionalità di sistema:
 
 * watchdog;
 * sicurezza;
 * rate limiting;
-* CSRF;
-* log;
+* protezione CSRF;
+* logging;
 * factory reset;
-* funzioni di inizializzazione;
-* gestione delle task;
+* inizializzazione del sistema;
+* gestione delle attività;
 * funzioni di supporto.
 
 ---
@@ -369,7 +374,7 @@ Contiene le funzionalità di sistema:
 
 L'interfaccia grafica è sviluppata per il display **ST7789 320×240** con touch resistivo **XPT2046**.
 
-Le principali schermate sono:
+Le principali schermate comprendono:
 
 * **Home**
 * **Acqua / Serbatoio**
@@ -388,7 +393,7 @@ La navigazione utilizza:
 * messaggi di stato;
 * schermate di allarme.
 
-### Gestione degli swipe
+### Gestione delle gesture
 
 Parametri principali:
 
@@ -401,17 +406,17 @@ SWIPE_MAX_MS    = 800 ms
 
 # 8. Sistema di irrigazione
 
-Il sistema può operare in modalità:
+Il sistema supporta tre modalità operative principali:
 
 * **Automatica**
 * **Manuale**
 * **SMART**
 
-## 8.1 Controllo automatico
+## 8.1 Modalità automatica
 
 La modalità automatica utilizza programmi configurabili dall'utente.
 
-La struttura principale del programma è:
+La struttura principale del programma comprende:
 
 ```text
 Programma
@@ -420,13 +425,26 @@ Programma
 └── Attivo
 ```
 
-Il sistema verifica le condizioni configurate e determina quando avviare il ciclo di irrigazione.
+Il firmware verifica periodicamente le condizioni configurate e determina quando avviare un ciclo di irrigazione.
+
+---
+
+## 8.2 Modalità manuale
+
+La modalità manuale permette all'utente di comandare direttamente le pompe attraverso l'interfaccia locale o il Web Server.
+
+Questa modalità è utile principalmente per:
+
+* test degli attuatori;
+* manutenzione;
+* verifica dell'impianto;
+* attivazione manuale dell'irrigazione.
 
 ---
 
 # 9. Modalità SMART
 
-La modalità **SMART** rappresenta una delle principali características tecniche del progetto.
+La modalità **SMART** rappresenta una delle principali caratteristiche tecniche del progetto.
 
 Il sistema utilizza una logica adattiva basata sui dati raccolti durante i cicli di irrigazione.
 
@@ -440,50 +458,56 @@ Umidità prima dell'irrigazione
 Ciclo di irrigazione
             ↓
 Umidità dopo l'irrigazione
+            ↓
+Variazione dell'umidità
 ```
 
-Il sistema può quindi stimare il guadagno di umidità ottenuto rispetto al tempo di funzionamento della pompa.
+Il sistema può quindi stimare il rapporto tra il tempo di funzionamento della pompa e la variazione dell'umidità del terreno.
 
-I dati vengono utilizzati per adattare la durata dei cicli successivi.
+Queste informazioni vengono utilizzate per adattare la durata dei cicli successivi.
 
-### Vantaggi
+### Obiettivi della logica SMART
 
-La logica SMART permette di:
+La logica SMART è progettata per:
 
-* ridurre irrigazioni eccessive;
+* ridurre irrigazioni non necessarie;
 * adattare il funzionamento alle condizioni reali del terreno;
 * migliorare la gestione dell'acqua;
-* utilizzare dati storici per modificare il comportamento del sistema.
+* utilizzare i dati dei cicli precedenti per modificare il comportamento del sistema.
 
-> La modalità SMART è una logica adattiva/euristica implementata a livello firmware e non rappresenta un modello di machine learning addestrato tramite framework esterni.
+> **Nota:** la modalità SMART è una logica adattiva/euristica implementata direttamente nel firmware. Non utilizza un modello di machine learning addestrato tramite framework esterni.
 
 ---
 
 # 10. Gestione meteorologica
 
-Il sistema può utilizzare **OpenWeatherMap** per ottenere informazioni sulle condizioni meteorologiche.
+Il sistema può utilizzare **OpenWeatherMap** per acquisire informazioni meteorologiche.
 
-Uno degli utilizzi principali è la previsione della pioggia.
+Uno degli utilizzi principali è la valutazione della previsione di pioggia.
 
 Il flusso logico è:
 
 ```text
 OpenWeatherMap
        ↓
-Previsione meteorologica
+Dati meteorologici
        ↓
-Pioggia prevista?
+Previsione di pioggia
        ↓
-      Sì
+Logica di irrigazione
        ↓
-Sospensione irrigazione automatica
+Irrigazione consentita?
+       │
+       ├── Sì → Avvio ciclo
+       │
+       └── No → Sospensione
 ```
 
-Questo permette di evitare, quando previsto dalle condizioni configurate, l'attivazione di cicli di irrigazione prima di una precipitazione.
+In presenza delle condizioni configurate, la previsione di pioggia può quindi impedire l'avvio di un ciclo automatico.
 
 ---
 
-# 11. Sensori
+# 11. Gestione dei sensori
 
 ## 11.1 Sensori di umidità del terreno
 
@@ -494,9 +518,9 @@ SOIL_PIN1 → GPIO 1
 SOIL_PIN2 → GPIO 2
 ```
 
-I sensori possono essere calibrati attraverso valori di riferimento per terreno secco e umido.
+I sensori possono essere calibrati utilizzando valori di riferimento per terreno asciutto e terreno umido.
 
-La calibrazione viene salvata nella memoria non volatile.
+I parametri di calibrazione vengono salvati nella memoria non volatile.
 
 ---
 
@@ -524,7 +548,7 @@ TRIG → GPIO 16
 ECHO → GPIO 17
 ```
 
-Il sistema utilizza la distanza misurata per determinare lo stato del serbatoio e generare eventuali condizioni di allarme.
+La distanza misurata viene utilizzata dal firmware per determinare lo stato del serbatoio e gestire eventuali condizioni di allarme.
 
 ---
 
@@ -537,15 +561,30 @@ SDA → GPIO 8
 SCL → GPIO 9
 ```
 
-Il sistema può inoltre sincronizzare l'orario tramite NTP quando è disponibile la connessione Wi-Fi.
+Quando la connessione Wi-Fi è disponibile, il sistema può inoltre sincronizzare l'orario tramite NTP.
 
 ---
 
 # 12. Web Server
 
-Il firmware include un Web Server embedded accessibile tramite browser.
+Il firmware include un Web Server embedded accessibile tramite browser attraverso la rete Wi-Fi.
 
-Tra le principali funzioni disponibili:
+Le principali funzionalità includono:
+
+* monitoraggio dello stato;
+* controllo manuale delle pompe;
+* configurazione dell'irrigazione;
+* gestione della programmazione;
+* configurazione Wi-Fi;
+* calibrazione dei sensori;
+* gestione dei profili delle piante;
+* configurazione SMART;
+* configurazione meteorologica;
+* gestione dei log;
+* aggiornamento OTA;
+* reset e configurazione del sistema.
+
+## 12.1 Endpoint principali
 
 | Endpoint         | Funzione                     |
 | ---------------- | ---------------------------- |
@@ -558,18 +597,18 @@ Tra le principali funzioni disponibili:
 | `/pompa2`        | Controllo pompa 2            |
 | `/pozzo`         | Controllo relè pozzo         |
 | `/setauto`       | Modalità automatica          |
-| `/sospensione`   | Sospensione                  |
+| `/sospensione`   | Sospensione irrigazione      |
 | `/setwifi`       | Configurazione Wi-Fi         |
 | `/scanwifi`      | Scansione reti               |
 | `/resetwifi`     | Reset Wi-Fi                  |
-| `/setsmart`      | Modalità SMART               |
+| `/setsmart`      | Configurazione SMART         |
 | `/synctime`      | Sincronizzazione orario      |
 | `/setmanualtime` | Impostazione manuale         |
 | `/getSoilCal`    | Lettura calibrazione terreno |
 | `/setSoilCal`    | Salvataggio calibrazione     |
-| `/getPlants`     | Lettura piante               |
-| `/savePlant`     | Salvataggio pianta           |
-| `/deletePlant`   | Eliminazione pianta          |
+| `/getPlants`     | Lettura profili piante       |
+| `/savePlant`     | Salvataggio profilo          |
+| `/deletePlant`   | Eliminazione profilo         |
 | `/applyPlant`    | Applicazione profilo         |
 | `/resetPlants`   | Reset profili                |
 | `/ota`           | Pagina OTA                   |
@@ -584,17 +623,18 @@ Tra le principali funzioni disponibili:
 
 # 13. Telegram
 
-L'integrazione Telegram permette di utilizzare il dispositivo anche da remoto.
+L'integrazione Telegram permette di interagire con il sistema anche da remoto.
 
-Funzionalità previste:
+Le funzionalità comprendono:
 
-* notifiche di eventi;
+* notifiche degli eventi;
 * notifiche relative alle pompe;
 * notifiche relative al serbatoio;
 * comandi remoti;
-* configurazione del bot.
+* comunicazione con il dispositivo;
+* gestione della configurazione del bot.
 
-Le informazioni necessarie vengono memorizzate nella configurazione cloud.
+Le informazioni necessarie per il funzionamento del servizio vengono gestite nella configurazione del sistema.
 
 Le credenziali non vengono pubblicate nel repository.
 
@@ -602,7 +642,7 @@ Le credenziali non vengono pubblicate nel repository.
 
 # 14. ESP-NOW
 
-ESP-NOW viene utilizzato per la comunicazione con dispositivi ESP remoti.
+ESP-NOW viene utilizzato per la comunicazione diretta con dispositivi ESP remoti.
 
 Possibili applicazioni:
 
@@ -611,17 +651,17 @@ Possibili applicazioni:
 * dispositivi ESP aggiuntivi;
 * acquisizione distribuita dei dati.
 
-Il firmware gestisce la ricezione dei dati attraverso callback dedicate.
+Questa tecnologia consente di estendere il sistema con dispositivi periferici senza richiedere necessariamente una connessione IP tra i nodi.
 
 ---
 
 # 15. Memoria persistente
 
-Il sistema utilizza la **NVS (Non-Volatile Storage)** tramite `Preferences`.
+Il sistema utilizza **NVS (Non-Volatile Storage)** attraverso la libreria `Preferences`.
 
-La memoria viene utilizzata per conservare configurazioni che devono rimanere disponibili anche dopo il riavvio del dispositivo.
+La memoria non volatile viene utilizzata per conservare le configurazioni che devono rimanere disponibili anche dopo un riavvio o una perdita di alimentazione.
 
-Esempi:
+Tra i dati memorizzabili rientrano:
 
 * calibrazione dei sensori;
 * configurazione Wi-Fi;
@@ -636,33 +676,33 @@ Esempi:
 
 # 16. Sicurezza
 
-Il firmware implementa diversi meccanismi di protezione.
+Il firmware integra diversi meccanismi di protezione.
 
-## Autenticazione
+## 16.1 Autenticazione
 
-L'accesso alle funzioni sensibili può essere protetto tramite password.
+L'accesso alle funzionalità sensibili può essere protetto tramite password.
 
-La password viene gestita utilizzando un hash **SHA-256**.
-
----
-
-## CSRF Protection
-
-Gli endpoint sensibili possono utilizzare meccanismi di protezione contro richieste non autorizzate tramite **CSRF token**.
+La password viene gestita mediante hashing **SHA-256**, evitando di memorizzarla direttamente in formato leggibile.
 
 ---
 
-## Rate Limiting
+## 16.2 Protezione CSRF
 
-Il firmware implementa un sistema di limitazione delle richieste per ridurre tentativi ripetuti di accesso o abuso degli endpoint.
+Gli endpoint sensibili possono utilizzare token **CSRF (Cross-Site Request Forgery)** per impedire richieste non autorizzate provenienti da contesti esterni.
 
 ---
 
-## Factory Reset
+## 16.3 Rate Limiting
+
+Il firmware implementa meccanismi di limitazione delle richieste per ridurre tentativi ripetuti di accesso o utilizzi anomali degli endpoint.
+
+---
+
+## 16.4 Factory Reset
 
 Il sistema dispone di una procedura di ripristino alle impostazioni di fabbrica.
 
-Il factory reset permette di cancellare le configurazioni persistenti e riportare il dispositivo allo stato iniziale.
+Il factory reset permette di cancellare le configurazioni persistenti e riportare il sistema allo stato iniziale.
 
 ---
 
@@ -676,7 +716,9 @@ Configurazione principale:
 WDT_TIMEOUT = 30 secondi
 ```
 
-In caso di blocco o mancata esecuzione corretta delle attività monitorate, il watchdog può provocare il riavvio del microcontrollore.
+Il watchdog consente di rilevare condizioni in cui le attività monitorate non vengono eseguite correttamente.
+
+In caso di blocco non recuperabile, il meccanismo può provocare il riavvio del microcontrollore.
 
 ---
 
@@ -684,7 +726,7 @@ In caso di blocco o mancata esecuzione corretta delle attività monitorate, il w
 
 Il firmware supporta l'aggiornamento tramite rete Wi-Fi.
 
-Il processo utilizza:
+Il processo può essere rappresentato come:
 
 ```text
 Browser
@@ -695,40 +737,42 @@ Upload firmware
    ↓
 OTA Update
    ↓
-Nuova partizione firmware
+Scrittura firmware
    ↓
 Riavvio ESP32-S3
 ```
 
-La funzione OTA è protetta dalle funzionalità di autenticazione del sistema.
+Questa funzionalità consente di aggiornare il firmware senza collegare fisicamente l'ESP32-S3 al computer.
 
-Per utilizzare correttamente l'aggiornamento è consigliata una configurazione di partizionamento compatibile con OTA.
+L'aggiornamento OTA richiede una configurazione di partizionamento compatibile con il meccanismo OTA dell'ESP32.
 
 ---
 
-# 19. FreeRTOS
+# 19. FreeRTOS e gestione delle attività
 
-L'ESP32-S3 utilizza il framework **FreeRTOS** per la gestione delle attività concorrenti.
+L'ESP32-S3 utilizza **FreeRTOS** come sistema operativo real-time integrato nel framework ESP32.
 
-Le principali attività comprendono:
+Le principali attività del firmware comprendono:
 
 ```text
 ┌──────────────────────────────┐
-│         ESP32-S3             │
+│           ESP32-S3           │
 ├──────────────────────────────┤
 │ UI / Touch                   │
 │                              │
-│ Sensors Task                 │
+│ Acquisizione sensori         │
 │                              │
-│ Irrigation Control           │
+│ Controllo irrigazione        │
 │                              │
-│ Web Server / Network         │
+│ Web Server / Networking      │
+│                              │
+│ Comunicazione remota         │
 │                              │
 │ Watchdog                     │
 └──────────────────────────────┘
 ```
 
-La separazione delle attività consente di mantenere indipendenti le principali funzioni del sistema e di ridurre il rischio che un singolo componente blocchi l'intero firmware.
+La gestione concorrente delle attività permette di mantenere separate le principali funzioni del sistema e di ridurre il rischio che una singola operazione blocchi l'intero firmware.
 
 ---
 
@@ -757,7 +801,7 @@ Elaborazione firmware
                  Decisione irrigazione
                          │
                          ▼
-                  Pompe / Relè
+                    Pompe / Relè
 ```
 
 Le informazioni meteorologiche possono influenzare la decisione finale:
@@ -766,20 +810,24 @@ Le informazioni meteorologiche possono influenzare la decisione finale:
 OpenWeatherMap
       │
       ▼
-Previsione pioggia
+Dati meteorologici
       │
       ▼
-Logica SMART / Automatica
+Logica automatica / SMART
       │
       ▼
 Irrigazione consentita?
+      │
+      ├── Sì → Attivazione
+      │
+      └── No → Sospensione
 ```
 
 ---
 
 # 21. Stati operativi
 
-Il sistema può gestire diversi stati operativi:
+Il sistema gestisce tre modalità operative principali:
 
 ```text
                     ┌─────────────┐
@@ -796,21 +844,21 @@ Il sistema può gestire diversi stati operativi:
           diretto       irrigazione   dinamico
 ```
 
-A questi stati si aggiungono condizioni di sicurezza, come:
+A queste modalità si aggiungono condizioni operative e di sicurezza, come:
 
 * serbatoio vuoto;
 * sospensione manuale;
-* fine-corsa;
+* condizioni non idonee all'irrigazione;
 * errore di sistema;
-* perdita di condizioni necessarie all'irrigazione.
+* perdita di condizioni necessarie all'attivazione delle pompe.
 
 ---
 
 # 22. Allarmi e protezioni operative
 
-Il sistema dispone di schermate dedicate agli eventi anomali.
+Il sistema dispone di schermate dedicate alla visualizzazione degli eventi anomali e dello stato operativo.
 
-Tra gli stati gestiti:
+Tra gli stati gestiti rientrano:
 
 * irrigazione in corso;
 * attivazione manuale;
@@ -818,46 +866,47 @@ Tra gli stati gestiti:
 * serbatoio vuoto;
 * terreno secco;
 * aggiornamento OTA;
-* reset del sistema.
+* reset del sistema;
+* condizioni anomale dei sensori.
 
-Gli allarmi vengono visualizzati localmente e, quando configurato, possono essere notificati anche tramite Telegram.
+Quando configurato, il sistema può inoltre inviare notifiche tramite Telegram.
 
 ---
 
 # 23. Librerie e tecnologie
 
-Il progetto utilizza o integra le seguenti tecnologie:
+Il progetto utilizza o integra le seguenti librerie e tecnologie:
 
-| Libreria / tecnologia | Utilizzo                   |
-| --------------------- | -------------------------- |
-| Arduino GFX Library   | Driver display ST7789      |
-| XPT2046_Touchscreen   | Touch resistivo            |
-| SPI                   | Comunicazione SPI          |
-| Wire                  | Comunicazione I²C          |
-| ArduinoJson           | Parsing JSON               |
-| DHT                   | Sensore DHT11              |
-| HTTPClient            | Comunicazione HTTP         |
-| WiFi                  | Connettività Wi-Fi         |
-| WiFiClientSecure      | HTTPS                      |
-| NTPClient             | Sincronizzazione NTP       |
-| Preferences           | NVS                        |
-| PubSubClient          | MQTT opzionale             |
-| UniversalTelegramBot  | Telegram                   |
-| WebServer             | Web Server embedded        |
-| Update                | OTA                        |
-| WiFiManager           | Configurazione Wi-Fi       |
-| RTClib                | RTC DS3231                 |
-| ESP-NOW               | Comunicazione peer-to-peer |
-| esp_task_wdt          | Watchdog                   |
-| mbedTLS / SHA-256     | Hash password              |
+| Libreria / tecnologia | Utilizzo                            |
+| --------------------- | ----------------------------------- |
+| Arduino GFX Library   | Driver display ST7789               |
+| XPT2046_Touchscreen   | Touch resistivo                     |
+| SPI                   | Comunicazione SPI                   |
+| Wire                  | Comunicazione I²C                   |
+| ArduinoJson           | Parsing e generazione JSON          |
+| DHT                   | Gestione DHT11                      |
+| HTTPClient            | Comunicazioni HTTP                  |
+| WiFi                  | Connettività Wi-Fi                  |
+| WiFiClientSecure      | Comunicazioni HTTPS                 |
+| NTPClient             | Sincronizzazione NTP                |
+| Preferences           | Storage NVS                         |
+| PubSubClient          | Supporto MQTT                       |
+| UniversalTelegramBot  | Comunicazione Telegram              |
+| WebServer             | Web Server embedded                 |
+| Update                | Aggiornamento OTA                   |
+| WiFiManager           | Configurazione Wi-Fi                |
+| RTClib                | Gestione RTC DS3231                 |
+| ESP-NOW               | Comunicazione wireless peer-to-peer |
+| esp_task_wdt          | Task Watchdog                       |
+| mbedTLS / SHA-256     | Hashing delle password              |
 
 La libreria **Espalexa** è stata rimossa dal progetto perché non utilizzata nella versione attuale.
 
 ---
 
-# 24. Struttura del progetto
+# 24. Struttura del repository
 
-La struttura concettuale del progetto è:
+La struttura concettuale del repository è:
 
 ```text
 esp32-smart-irrigation/
@@ -865,14 +914,15 @@ esp32-smart-irrigation/
 ├── README.md
 │
 ├── docs/
-│   ├── architecture.svg
-│   └── DOCUMENTAZIONE.md
+│   ├── ARCHITECTURE.md
+│   ├── DOCUMENTATION.md
+│   └── architecture.svg
 │
 └── images/
     └── ...
 ```
 
-Il repository pubblico contiene la documentazione e gli elementi necessari per presentare il progetto come portfolio tecnico.
+Il repository pubblico contiene la documentazione tecnica e gli elementi necessari alla presentazione del progetto come portfolio.
 
 Il firmware completo non viene pubblicato.
 
@@ -891,7 +941,7 @@ RTOS             : FreeRTOS
 Core ESP32       : 2.0.17
 ```
 
-Per una eventuale ricostruzione del firmware originale, è necessario utilizzare una configurazione compatibile con il core ESP32 e con le librerie indicate nella documentazione.
+La ricostruzione del firmware originale richiede una configurazione compatibile con il core ESP32 e con le librerie indicate nella documentazione.
 
 ---
 
@@ -899,25 +949,25 @@ Per una eventuale ricostruzione del firmware originale, è necessario utilizzare
 
 Il firmware originale era costituito da uno sketch monolitico di grandi dimensioni.
 
-La successiva modularizzazione ha separato le funzionalità in componenti indipendenti.
+La successiva modularizzazione ha separato le principali funzionalità in componenti distinti.
 
-La struttura risultante segue il principio:
+La struttura concettuale risultante è:
 
 ```text
-                app.h
-                  │
-        ┌─────────┼─────────┐
-        │         │         │
-        ▼         ▼         ▼
-       UI       Control    Network
-        │         │         │
-   display.cpp irrigation.cpp web.cpp
-              │
-              ▼
-         hardware.cpp
-              │
-              ▼
-           ESP32-S3
+                    app.h
+                      │
+        ┌─────────────┼─────────────┐
+        │             │             │
+        ▼             ▼             ▼
+       UI           Control       Network
+        │             │             │
+ display.cpp    irrigation.cpp    web.cpp
+                      │
+                      ▼
+                 hardware.cpp
+                      │
+                      ▼
+                   ESP32-S3
 ```
 
 Questo approccio facilita:
@@ -938,9 +988,9 @@ Il progetto è stato sviluppato attraverso un processo iterativo:
 ```text
 Prototipo hardware
        ↓
-Acquisizione sensori
+Acquisizione dei sensori
        ↓
-Controllo attuatori
+Controllo degli attuatori
        ↓
 Interfaccia locale
        ↓
@@ -956,27 +1006,28 @@ Logica SMART
        ↓
 Sicurezza e affidabilità
        ↓
-Modularizzazione firmware
+Modularizzazione del firmware
 ```
 
-Questo approccio ha permesso di evolvere il sistema da un semplice controller hardware a una piattaforma IoT completa.
+Questo processo ha permesso di evolvere il sistema da un controller hardware iniziale a una piattaforma embedded/IoT più completa e strutturata.
 
 ---
 
 # 28. Competenze tecniche dimostrate
 
-Il progetto rappresenta un'integrazione di diverse aree dell'ingegneria elettronica e dello sviluppo embedded.
+Il progetto integra diverse aree dell'elettronica, della programmazione embedded e dell'automazione.
 
-### Embedded Systems
+## Embedded Systems
 
 * Programmazione C/C++;
 * ESP32-S3;
 * FreeRTOS;
-* gestione memoria;
-* gestione task;
-* watchdog.
+* gestione della memoria;
+* gestione delle attività;
+* watchdog;
+* gestione delle periferiche.
 
-### Elettronica
+## Elettronica
 
 * GPIO;
 * ADC;
@@ -985,40 +1036,41 @@ Il progetto rappresenta un'integrazione di diverse aree dell'ingegneria elettron
 * sensori digitali;
 * SPI;
 * I²C;
-* integrazione periferiche.
+* integrazione hardware;
+* calibrazione dei sensori.
 
-### IoT
+## IoT e Networking
 
 * Wi-Fi;
-* Web Server;
-* REST-like HTTP endpoints;
+* Web Server embedded;
+* endpoint HTTP;
 * Telegram;
 * ESP-NOW;
 * OpenWeatherMap;
 * OTA.
 
-### Software Architecture
+## Software Architecture
 
-* modularizzazione;
+* modularizzazione del firmware;
 * separazione delle responsabilità;
 * gestione delle dipendenze;
 * strutture dati;
 * configurazione persistente;
-* gestione dello stato.
+* gestione dello stato del sistema.
 
-### Sicurezza
+## Sicurezza
 
 * SHA-256;
 * autenticazione;
 * CSRF protection;
 * rate limiting;
-* protezione OTA.
+* protezione delle funzionalità OTA.
 
-### Automazione
+## Automazione
 
 * controllo automatico;
 * programmazione;
-* feedback da sensori;
+* feedback dei sensori;
 * logica adattiva;
 * gestione delle condizioni ambientali.
 
@@ -1026,19 +1078,19 @@ Il progetto rappresenta un'integrazione di diverse aree dell'ingegneria elettron
 
 # 29. Possibili sviluppi futuri
 
-L'architettura del progetto permette ulteriori evoluzioni, tra cui:
+L'architettura attuale permette ulteriori evoluzioni, tra cui:
 
 * dashboard Web più avanzata;
 * gestione di un numero maggiore di zone di irrigazione;
 * sensori remoti aggiuntivi;
 * storico dei dati;
-* grafici di consumo dell'acqua;
+* grafici relativi ai consumi d'acqua;
 * integrazione con ulteriori piattaforme IoT;
 * algoritmi predittivi più avanzati;
 * gestione energetica;
 * alimentazione tramite pannello solare;
-* espansione del sistema ESP-NOW;
-* database remoto per lo storico.
+* espansione della rete ESP-NOW;
+* database remoto per lo storico dei dati.
 
 ---
 
@@ -1048,8 +1100,8 @@ L'architettura del progetto permette ulteriori evoluzioni, tra cui:
 
 Il progetto dimostra la capacità di sviluppare un sistema partendo dall'integrazione hardware fino alla gestione software di alto livello, includendo:
 
-* acquisizione dati;
-* controllo attuatori;
+* acquisizione dei dati;
+* controllo degli attuatori;
 * interfaccia utente;
 * networking;
 * controllo remoto;
@@ -1057,18 +1109,20 @@ Il progetto dimostra la capacità di sviluppare un sistema partendo dall'integra
 * logica adattiva;
 * sicurezza;
 * aggiornamento OTA;
-* gestione real-time.
+* gestione real-time;
+* persistenza della configurazione.
 
-L'architettura modulare permette inoltre di mantenere il firmware organizzato e di facilitarne l'evoluzione futura.
+L'architettura modulare consente inoltre di mantenere il firmware organizzato, facilitando la manutenzione, il debugging e l'introduzione di nuove funzionalità.
 
 ---
 
-## Stato del progetto
+# Stato del progetto
 
-**Platform:** ESP32-S3
+**Piattaforma:** ESP32-S3
 **Display:** ST7789 320×240
 **Touch:** XPT2046
 **Firmware:** C++ / Arduino
 **Real-Time:** FreeRTOS
-**Project Type:** Embedded / IoT / Automation
-**Repository:** Technical Portfolio
+**Architettura:** Firmware modulare
+**Tipologia:** Embedded / IoT / Automazione
+**Repository:** Portfolio tecnico
