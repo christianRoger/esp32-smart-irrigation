@@ -71,7 +71,7 @@ Il microcontrollore gestisce l'acquisizione dei sensori, il controllo degli attu
 | `T_CS`           |   38 | Chip Select XPT2046                   |
 | `T_IRQ`          |   39 | Interrupt touch                       |
 | `LED1`           |   47 | LED di stato 1                        |
-| `LED2`           |    — | LED di stato 2 — GPIO non specificato |
+| `LED2`           |   48 | LED di stato 2                        |
 
 ### Parametri principali
 
