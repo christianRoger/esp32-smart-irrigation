@@ -22,7 +22,7 @@ Il controller gestisce:
 * 🚰 Monitoraggio del livello del serbatoio
 * 🖥️ Interfaccia TFT touch
 * 📡 Connettività Wi-Fi
-* 🌐 Web Server embedded
+* 🌐 Web Server integrato
 * 📱 Controllo remoto e notifiche tramite Telegram
 * 🔗 Comunicazione ESP-NOW
 * ☁️ Integrazione con OpenWeatherMap
@@ -31,6 +31,25 @@ Il controller gestisce:
 * 🛡️ Watchdog e meccanismi di sicurezza
 
 ---
+
+## Punti di forza tecnici
+
+| Area | Implementazione |
+|---|---|
+| MCU | ESP32-S3 Dual-Core |
+| Firmware | C++ modulare / Arduino |
+| Sistema real-time | FreeRTOS |
+| Display | ST7789 320×240 |
+| Touch | XPT2046 |
+| Sensori | Umidità del terreno / DHT11 / HC-SR04 |
+| Comunicazione | Wi-Fi / ESP-NOW |
+| Controllo remoto | Web Server / Telegram |
+| Cloud | OpenWeatherMap |
+| Memoria | NVS / Preferences |
+| Aggiornamenti | OTA |
+| Sicurezza | SHA-256 / CSRF / Rate Limiting |
+| Affidabilità | Hardware Watchdog |
+| Logica di controllo | Automatica / Manuale / SMART |
 
 ## Hardware
 
