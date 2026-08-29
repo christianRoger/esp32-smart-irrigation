@@ -2,17 +2,17 @@
 
 ## Sistema di irrigazione IoT intelligente
 
-Sistema di controllo dell'irrigazione sviluppato su **ESP32-S3**, che integra elettronica embedded, sensori, automazione, connettività remota e un'interfaccia touch interattiva.
+Sistema di controllo dell'irrigazione sviluppato su **ESP32-S3**, progettato per integrare elettronica embedded, sensori, automazione, connettività di rete, controllo remoto e interfaccia touch.
 
-Il progetto è stato sviluppato come un sistema IoT completo, in grado di monitorare le condizioni del terreno e dell'ambiente, controllare le pompe di irrigazione e adattare i cicli di irrigazione in base ai dati rilevati e alle informazioni meteorologiche.
+Il progetto combina acquisizione dei dati, controllo degli attuatori e logiche automatiche per realizzare un sistema di irrigazione capace di adattare il proprio funzionamento alle condizioni del terreno e alle informazioni meteorologiche.
 
-> **Nota:** il codice sorgente non è incluso in questo repository. Il progetto è presentato come **portfolio tecnico**, con documentazione dell'architettura, delle funzionalità e delle principali soluzioni implementate.
+> **Nota:** il codice sorgente non è incluso nel repository. Il progetto è pubblicato come **portfolio tecnico**, con documentazione dell'architettura, delle funzionalità e delle principali soluzioni tecniche adottate.
 
 ---
 
 ## Panoramica del progetto
 
-Il sistema integra controllo hardware, firmware embedded e connettività IoT in un'unica piattaforma per la gestione automatizzata dell'irrigazione.
+Il sistema integra hardware, firmware e servizi IoT all'interno di un'unica piattaforma embedded.
 
 Il controller gestisce:
 
@@ -34,23 +34,23 @@ Il controller gestisce:
 
 ## Punti di forza tecnici
 
-| Area                | Implementazione                       |
-| ------------------- | ------------------------------------- |
-| MCU                 | ESP32-S3 Dual-Core                    |
-| Firmware            | C++ modulare / Arduino                |
-| Sistema real-time   | FreeRTOS                              |
-| Display             | ST7789 320×240                        |
-| Touch               | XPT2046                               |
-| RTC                 | DS3231                                |
-| Sensori             | Umidità del terreno / DHT11 / HC-SR04 |
-| Comunicazione       | Wi-Fi / ESP-NOW                       |
-| Controllo remoto    | Web Server / Telegram                 |
-| Cloud               | OpenWeatherMap                        |
-| Memoria             | NVS / Preferences                     |
-| Aggiornamenti       | OTA                                   |
-| Sicurezza           | SHA-256 / CSRF / Rate Limiting        |
-| Affidabilità        | Hardware Watchdog                     |
-| Logica di controllo | Automatica / Manuale / SMART          |
+| Area                   | Implementazione                       |
+| ---------------------- | ------------------------------------- |
+| MCU                    | ESP32-S3 Dual-Core                    |
+| Firmware               | C++ modulare / Arduino                |
+| Sistema real-time      | FreeRTOS                              |
+| Display                | ST7789 320×240                        |
+| Touch                  | XPT2046                               |
+| RTC                    | DS3231                                |
+| Sensori                | Umidità del terreno / DHT11 / HC-SR04 |
+| Comunicazione          | Wi-Fi / ESP-NOW                       |
+| Controllo remoto       | Web Server / Telegram                 |
+| Servizio meteorologico | OpenWeatherMap                        |
+| Memoria                | NVS / Preferences                     |
+| Aggiornamenti          | OTA                                   |
+| Sicurezza              | SHA-256 / CSRF / Rate Limiting        |
+| Affidabilità           | Hardware Watchdog                     |
+| Logica di controllo    | Automatica / Manuale / SMART          |
 
 ---
 
@@ -58,77 +58,67 @@ Il controller gestisce:
 
 ### 🤖 Logica SMART adattiva
 
-Il sistema utilizza i dati di umidità del terreno e il tempo di funzionamento delle pompe per adattare dinamicamente la durata dei cicli di irrigazione.
+La modalità **SMART** utilizza i dati rilevati dai sensori e lo storico dei cicli di irrigazione per rendere il controllo più adattivo.
 
-La logica analizza principalmente:
+Il sistema considera principalmente:
 
-* tempo di funzionamento della pompa;
+* durata del funzionamento della pompa;
 * umidità del terreno prima dell'irrigazione;
-* umidità del terreno dopo l'irrigazione.
+* umidità del terreno dopo l'irrigazione;
+* variazione dell'umidità ottenuta.
 
-Sulla base dei dati raccolti, il sistema può modificare la durata dei successivi cicli di irrigazione.
+Sulla base di queste informazioni, la durata dei cicli può essere adattata per migliorare la gestione dell'acqua.
 
-La logica SMART può inoltre utilizzare le informazioni meteorologiche provenienti da **OpenWeatherMap** per sospendere automaticamente l'irrigazione quando è prevista pioggia.
-
----
-
-### 🌐 Sistema IoT
-
-Il controller integra diversi sistemi di comunicazione:
-
-* Wi-Fi;
-* Web Server embedded;
-* Telegram;
-* ESP-NOW;
-* OpenWeatherMap.
-
-Questa architettura permette di combinare controllo locale, gestione remota e comunicazione con dispositivi esterni.
+La logica SMART può inoltre utilizzare le informazioni meteorologiche provenienti da **OpenWeatherMap** per evitare o sospendere l'irrigazione automatica quando è prevista pioggia.
 
 ---
 
 ### ⚙️ Firmware modulare
 
-Il firmware è stato inizialmente sviluppato come uno sketch monolitico di grandi dimensioni.
+Il firmware è stato inizialmente sviluppato come uno sketch monolitico.
 
-Con l'evoluzione del progetto, il software è stato riorganizzato in moduli C++ separati, con responsabilità specifiche per:
+Con l'evoluzione del progetto, l'architettura è stata riorganizzata in moduli C++ separati, ciascuno dedicato a una specifica responsabilità.
 
-* interfaccia grafica;
-* gestione hardware;
-* irrigazione;
-* rete;
-* comunicazione cloud;
-* ESP-NOW;
-* gestione del tempo;
-* profili delle piante;
-* sistema e sicurezza.
+Questa organizzazione facilita:
 
-La modularizzazione è stata adottata per migliorare **manutenibilità, leggibilità e possibilità di evoluzione del firmware**.
+* manutenzione;
+* diagnostica;
+* debug;
+* evoluzione del firmware;
+* integrazione di nuove funzionalità;
+* separazione tra hardware, controllo e comunicazione.
 
 ---
 
 ### 🖥️ Interfaccia embedded
 
-Il sistema dispone di un'interfaccia grafica touch sviluppata per il display **ST7789 320×240**.
+Il sistema dispone di un'interfaccia grafica touch basata su **ST7789 320×240** e **XPT2046**.
 
-Le principali schermate comprendono:
+L'interfaccia permette di:
 
-* Home
-* Acqua / Serbatoio
-* Rete
-* Meteo
-* SMART / AI
-* Programmazione
-* Impostazioni
+* visualizzare lo stato del sistema;
+* controllare manualmente le pompe;
+* configurare l'irrigazione;
+* visualizzare i dati dei sensori;
+* consultare le informazioni meteorologiche;
+* configurare la modalità SMART;
+* gestire le impostazioni del sistema.
 
-L'interfaccia comprende inoltre:
+Sono inoltre presenti gesture touch, animazioni, schermate di allarme e tastiera virtuale.
 
-* elementi grafici e animazioni;
-* navigazione tramite touch;
-* gesture swipe;
-* pulsanti touch;
-* schermate di allarme;
-* tastiera virtuale;
-* visualizzazione dello stato del sistema.
+---
+
+### 🌐 Sistema IoT
+
+Il controller integra diverse tecnologie di comunicazione:
+
+* Wi-Fi;
+* Web Server;
+* Telegram;
+* ESP-NOW;
+* OpenWeatherMap.
+
+Questa architettura permette di gestire il dispositivo sia localmente tramite display e browser, sia da remoto tramite servizi di rete.
 
 ---
 
@@ -136,7 +126,7 @@ L'interfaccia comprende inoltre:
 
 ### Controller principale
 
-* ESP32-S3
+* ESP32-S3 Dual-Core
 * Display TFT ST7789 — 320×240
 * Touch resistivo XPT2046
 * RTC DS3231
@@ -144,8 +134,8 @@ L'interfaccia comprende inoltre:
 ### Sensori
 
 * 2× sensori di umidità del terreno
-* DHT11 per temperatura e umidità ambientale
-* HC-SR04 per la misura del livello del serbatoio
+* DHT11 per temperatura e umidità
+* HC-SR04 per il rilevamento del livello dell'acqua
 
 ### Attuatori
 
@@ -177,38 +167,37 @@ L'interfaccia comprende inoltre:
 
 ---
 
-## Irrigazione SMART
+## Interfaccia utente
 
-Una delle caratteristiche principali del progetto è la modalità **SMART**, progettata per rendere la gestione dell'irrigazione più adattiva.
+L'interfaccia grafica è progettata per permettere il controllo locale del sistema direttamente dal dispositivo.
 
-Il sistema considera il rapporto tra:
+Le principali schermate comprendono:
 
-```text
-Tempo di irrigazione
-        +
-Umidità prima dell'irrigazione
-        +
-Umidità dopo l'irrigazione
-        ↓
-Analisi della risposta del terreno
-        ↓
-Adattamento della durata
-dei successivi cicli
-```
+* Home
+* Acqua / Serbatoio
+* Rete
+* Meteo
+* SMART / AI
+* Programmazione
+* Impostazioni
 
-La logica permette al controller di utilizzare il comportamento osservato del sistema per adattare progressivamente i parametri di irrigazione.
+Funzionalità dell'interfaccia:
 
-In presenza di previsioni di pioggia, il sistema può inoltre sospendere automaticamente i cicli di irrigazione programmati.
+* navigazione touch;
+* gesture swipe;
+* pulsanti touch;
+* animazioni;
+* notifiche e allarmi;
+* tastiera virtuale;
+* visualizzazione dello stato del sistema.
 
 ---
 
 ## Controllo remoto
 
-Il sistema supporta diverse modalità di comunicazione e controllo.
-
 ### Web Server
 
-Il Web Server embedded permette di monitorare e configurare il dispositivo direttamente tramite browser.
+Il Web Server embedded permette di accedere al sistema tramite browser attraverso la rete Wi-Fi.
 
 Le principali funzioni comprendono:
 
@@ -218,133 +207,64 @@ Le principali funzioni comprendono:
 * configurazione Wi-Fi;
 * calibrazione dei sensori;
 * gestione dei profili delle piante;
-* configurazione della modalità SMART;
+* configurazione SMART;
 * configurazione meteorologica;
 * gestione dei log;
 * aggiornamento firmware OTA;
-* configurazione del sistema;
-* factory reset.
+* configurazione e reset del sistema.
 
 ### Telegram
 
 L'integrazione con Telegram permette di:
 
 * ricevere notifiche;
-* monitorare eventi del sistema;
+* monitorare il sistema;
 * inviare comandi da remoto;
-* ricevere informazioni sullo stato dell'impianto.
+* ricevere informazioni sullo stato del dispositivo.
 
 ### ESP-NOW
 
-ESP-NOW viene utilizzato per la comunicazione con sensori e dispositivi ESP remoti, permettendo di estendere il sistema con nodi distribuiti.
+ESP-NOW viene utilizzato per la comunicazione con dispositivi ESP remoti.
+
+Questa funzionalità permette di estendere il sistema attraverso nodi distribuiti, ad esempio sensori remoti.
 
 ---
 
 ## Affidabilità e sicurezza
 
-Il firmware integra diversi meccanismi progettati per migliorare l'affidabilità e la sicurezza del sistema:
+Il firmware integra diversi meccanismi per migliorare l'affidabilità e la sicurezza del sistema.
 
-* Hardware Watchdog
-* Accesso protetto tramite password
-* Hashing della password con SHA-256
-* Protezione CSRF
-* Rate Limiting
-* Protezione degli aggiornamenti OTA
-* Factory Reset
-* Configurazione persistente tramite NVS
-* Gestione delle condizioni anomale del sistema
+### Sicurezza
 
----
+* autenticazione tramite password;
+* hashing SHA-256;
+* protezione CSRF;
+* rate limiting;
+* protezione delle operazioni sensibili;
+* protezione dell'aggiornamento OTA.
 
-## Architettura
+### Affidabilità
 
-![System Architecture](docs/architecture.svg)
-
-Il sistema segue un'architettura composta da hardware, firmware embedded e servizi esterni.
-
-```text
-                    ESP32-S3
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
-     Sensori        Attuatori      Interfaccia
-        │              │              │
-   Suolo / DHT11   Pompe / Relè    ST7789 + Touch
-   HC-SR04         Buzzer / LED
-        │
-        └──────────────┬──────────────┘
-                       │
-                  Logica di controllo
-                       │
-              ┌────────┼────────┐
-              │        │        │
-             Wi-Fi   Telegram  ESP-NOW
-              │
-        OpenWeatherMap
-              │
-          SMART Logic
-```
-
-La comunicazione tra i diversi componenti permette di separare:
-
-* acquisizione dei dati;
-* gestione hardware;
-* logica di irrigazione;
-* interfaccia utente;
-* comunicazione di rete;
-* servizi cloud;
-* gestione della sicurezza.
-
-Per la descrizione dettagliata dell'architettura software, dei moduli e dei flussi di dati:
-
-➡️ **[Documentazione tecnica completa](docs/DOCUMENTAZIONE.md)**
+* Hardware Watchdog;
+* gestione delle condizioni anomale;
+* factory reset;
+* configurazione persistente;
+* monitoraggio dei sensori;
+* gestione del livello del serbatoio.
 
 ---
 
-## Principali sfide tecniche
+## Architettura del sistema
 
-Durante lo sviluppo del sistema sono state affrontate diverse problematiche tecniche, tra cui:
+Il firmware utilizza un'architettura modulare che separa le principali responsabilità del sistema:
 
-* Modularizzazione di un firmware inizialmente sviluppato come sketch monolitico di grandi dimensioni.
-* Integrazione di più sensori e attuatori con ESP32-S3.
-* Coordinamento tra interfaccia utente, acquisizione dei sensori, controllo dell'irrigazione e servizi di rete.
-* Gestione della configurazione persistente tramite NVS.
-* Implementazione dell'aggiornamento firmware OTA tramite Web Server integrato.
-* Comunicazione remota tramite Wi-Fi, Telegram ed ESP-NOW.
-* Calibrazione e gestione dell'acquisizione dei sensori.
-* Implementazione di watchdog, autenticazione, protezione CSRF e rate limiting.
-* Sviluppo di una logica SMART adattiva basata sul feedback dell'umidità del terreno.
-* Gestione di più funzionalità concorrenti all'interno dell'ambiente FreeRTOS.
+**Acquisizione → Elaborazione → Decisione → Azionamento → Monitoraggio**
 
----
+![Architettura del sistema](docs/architecture.svg)
 
-## Architettura hardware e software
+Per una descrizione dettagliata dei moduli software, dei flussi di dati, dell'esecuzione runtime e delle interazioni tra hardware e firmware:
 
-Il sistema segue una struttura a più livelli:
-
-```text
-┌───────────────────────────────────────┐
-│             USER INTERFACE            │
-│        TFT Touch / Web / Telegram     │
-└───────────────────┬───────────────────┘
-                    │
-┌───────────────────▼───────────────────┐
-│          CONTROL & SMART LOGIC        │
-│     Irrigation / Scheduling / AI      │
-└───────────────────┬───────────────────┘
-                    │
-┌───────────────────▼───────────────────┐
-│          SENSOR / HARDWARE            │
-│ Soil / DHT11 / HC-SR04 / RTC / Relays│
-└───────────────────┬───────────────────┘
-                    │
-┌───────────────────▼───────────────────┐
-│              ESP32-S3                 │
-│        Embedded Control Platform      │
-└───────────────────────────────────────┘
-```
-
-Questa separazione permette di mantenere distinti acquisizione dati, logica di controllo, interfaccia utente e comunicazione, facilitando la manutenzione e l'evoluzione del sistema.
+👉 [Visualizza l'architettura completa](docs/ARCHITECTURE.md)
 
 ---
 
@@ -353,41 +273,99 @@ Questa separazione permette di mantenere distinti acquisizione dati, logica di c
 Il progetto dimostra esperienza pratica nelle seguenti aree:
 
 * Sviluppo di sistemi embedded
-* Programmazione di microcontrollori
 * Programmazione C++
-* Integrazione hardware e software
+* Programmazione di microcontrollori
+* Integrazione hardware/software
 * Acquisizione dati da sensori
 * Controllo di attuatori
 * Comunicazione SPI e I²C
-* Letture ADC e calibrazione dei sensori
+* Letture ADC e calibrazione
+* Display e interfacce touch
 * Networking Wi-Fi
-* Comunicazione IoT
-* Web Server embedded
-* Interfacce grafiche touch
 * Comunicazione ESP-NOW
-* Gestione remota dei dispositivi
+* Web Server embedded
+* API e servizi cloud
+* Telegram Bot
 * Aggiornamenti firmware OTA
-* Gestione di task real-time
+* FreeRTOS
+* Memoria non volatile
 * Sicurezza embedded
-* Diagnostica del sistema
+* Watchdog e gestione degli errori
 * Automazione
-* Integrazione hardware/software
+* Diagnostica
+* Progettazione di sistemi IoT
+
+---
+
+## Principali sfide tecniche
+
+Durante lo sviluppo sono state affrontate diverse problematiche tecniche, tra cui:
+
+* modularizzazione di un firmware inizialmente monolitico;
+* integrazione di più sensori e attuatori con ESP32-S3;
+* coordinamento tra interfaccia utente, acquisizione dei sensori, controllo dell'irrigazione e servizi di rete;
+* gestione della configurazione persistente tramite NVS;
+* implementazione dell'aggiornamento firmware OTA;
+* comunicazione remota tramite Wi-Fi, Telegram ed ESP-NOW;
+* calibrazione dei sensori;
+* gestione delle condizioni anomale;
+* implementazione di watchdog e meccanismi di sicurezza;
+* sviluppo di una logica SMART basata sul feedback dell'umidità del terreno.
+
+---
+
+## Documentazione tecnica
+
+Il repository contiene documentazione separata per facilitare la consultazione del progetto.
+
+### Architettura
+
+👉 [ARCHITECTURE.md](docs/ARCHITECTURE.md)
+
+Documentazione dell'architettura hardware e software, dei moduli firmware, dei flussi di dati, delle attività runtime e delle comunicazioni tra i componenti.
+
+### Documentazione tecnica
+
+👉 [DOCUMENTATION.md](docs/DOCUMENTATION.md)
+
+Documentazione tecnica dettagliata relativa all'hardware, alle funzionalità, alla configurazione e agli aspetti implementativi del sistema.
+
+### Diagramma dell'architettura
+
+👉 [architecture.svg](docs/architecture.svg)
+
+Diagramma visuale dell'architettura complessiva del sistema.
+
+---
+
+## Struttura del repository
+
+```text
+esp32-smart-irrigation/
+│
+├── README.md
+│
+└── docs/
+    ├── ARCHITECTURE.md
+    ├── DOCUMENTATION.md
+    └── architecture.svg
+```
+
+Il repository non contiene il firmware sorgente. La struttura è stata organizzata come **portfolio tecnico**, con l'obiettivo di presentare il progetto, la sua architettura e le competenze tecniche utilizzate nello sviluppo.
 
 ---
 
 ## Project Status
 
-| Parametro            | Valore                       |
-| -------------------- | ---------------------------- |
-| Piattaforma          | ESP32-S3                     |
-| Display              | ST7789 320×240               |
-| Touch                | XPT2046                      |
-| RTC                  | DS3231                       |
-| Ambiente di sviluppo | Arduino IDE                  |
-| Firmware             | C++                          |
-| Architettura         | Firmware modulare            |
-| Real-Time            | FreeRTOS                     |
-| Tipologia            | Embedded / IoT / Automazione |
+**Piattaforma:** ESP32-S3
+**Display:** ST7789 320×240
+**Touch:** XPT2046
+**RTC:** DS3231
+**Ambiente di sviluppo:** Arduino IDE
+**Firmware:** C++
+**Architettura:** Firmware modulare
+**Comunicazione:** Wi-Fi / ESP-NOW / Telegram
+**Tipologia:** Embedded / IoT / Automazione
 
 ---
 
@@ -395,48 +373,25 @@ Il progetto dimostra esperienza pratica nelle seguenti aree:
 
 Il progetto è stato sviluppato come applicazione pratica di **sistemi embedded, automazione e IoT**, combinando elettronica, firmware e comunicazione di rete in un'unica piattaforma.
 
-L'obiettivo è realizzare un sistema di irrigazione capace non solo di eseguire comandi predefiniti, ma anche di:
+L'obiettivo è realizzare un sistema di irrigazione capace di:
 
-* acquisire dati dal campo;
-* analizzare le condizioni rilevate;
+* acquisire dati dal terreno e dall'ambiente;
+* elaborare le informazioni ricevute;
 * controllare autonomamente gli attuatori;
-* comunicare con dispositivi remoti;
-* fornire interfacce locali e remote;
+* gestire cicli di irrigazione automatici e manuali;
+* adattare la durata dell'irrigazione;
 * utilizzare informazioni meteorologiche;
-* adattare il comportamento dell'irrigazione;
-* mantenere configurazioni e parametri nel tempo.
+* comunicare con dispositivi remoti;
+* offrire interfacce locali e remote;
+* mantenere configurazioni e parametri nel tempo;
+* aggiornare il firmware senza collegamento fisico al dispositivo.
 
 ---
 
 ## Portfolio tecnico
 
-Questo repository rappresenta una sintesi delle competenze applicate nello sviluppo del progetto, tra cui:
+Questo repository rappresenta una sintesi delle competenze applicate nello sviluppo del progetto:
 
-**Elettronica · Firmware Embedded · C++ · ESP32 · Automazione · IoT · Networking · Sensoristica · Controllo · Interfacce Touch · Web Server · OTA · Diagnostica**
+**Elettronica → Firmware → Automazione → IoT → Networking → Interfaccia utente → Integrazione hardware/software**
 
-Il codice sorgente non viene pubblicato; la documentazione è fornita per illustrare l'architettura, le funzionalità, le problematiche affrontate e le principali soluzioni tecniche adottate.
-
----
-
-## Documentazione
-
-Per approfondire l'architettura e le caratteristiche tecniche del progetto:
-
-- 📐 [Architettura del sistema](docs/ARCHITECTURE.md)
-- 📘 [Documentazione tecnica](docs/DOCUMENTATION.md)
-
-La documentazione comprende:
-
-* architettura del sistema;
-* hardware e pinout;
-* struttura del firmware;
-* moduli software;
-* comunicazione;
-* Web Server;
-* Telegram;
-* ESP-NOW;
-* logica SMART;
-* sicurezza;
-* OTA;
-* gestione dei sensori;
-* struttura del progetto.
+Il codice sorgente non viene pubblicato. La documentazione è fornita per illustrare l'architettura, le funzionalità e le principali soluzioni tecniche adottate durante lo sviluppo.
