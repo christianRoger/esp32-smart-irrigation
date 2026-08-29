@@ -58,7 +58,7 @@ Il controller gestisce:
 
 ### 🤖 Logica SMART adattiva
 
-La modalità **SMART** utilizza i dati rilevati dai sensori e lo storico dei cicli di irrigazione per rendere il controllo più adattivo.
+La modalità **SMART** utilizza i dati rilevati dai sensori e le informazioni raccolte durante i cicli di irrigazione per rendere il controllo più adattivo.
 
 Il sistema considera principalmente:
 
@@ -83,7 +83,7 @@ Questa organizzazione facilita:
 
 * manutenzione;
 * diagnostica;
-* debug;
+* debugging;
 * evoluzione del firmware;
 * integrazione di nuove funzionalità;
 * separazione tra hardware, controllo e comunicazione.
@@ -197,7 +197,7 @@ Funzionalità dell'interfaccia:
 
 ### Web Server
 
-Il Web Server embedded permette di accedere al sistema tramite browser attraverso la rete Wi-Fi.
+Il Web Server integrato permette di accedere al sistema tramite browser attraverso la rete Wi-Fi.
 
 Le principali funzioni comprendono:
 
@@ -265,6 +265,102 @@ Il firmware utilizza un'architettura modulare che separa le principali responsab
 Per una descrizione dettagliata dei moduli software, dei flussi di dati, dell'esecuzione runtime e delle interazioni tra hardware e firmware:
 
 👉 [Visualizza l'architettura completa](docs/ARCHITECTURE.md)
+
+---
+
+## 🖥️ Interfaccia Web
+
+Il sistema dispone di un'interfaccia Web integrata progettata per consentire il monitoraggio, la configurazione e il controllo remoto dell'impianto di irrigazione.
+
+L'interfaccia è accessibile tramite browser attraverso la rete Wi-Fi del dispositivo.
+
+### Dashboard principale
+
+La dashboard principale fornisce una panoramica dello stato del sistema in tempo reale.
+
+Sono visualizzati:
+
+* stato delle pompe;
+* stato dei sensori;
+* condizioni meteorologiche;
+* livello del serbatoio;
+* temperatura;
+* umidità ambientale;
+* umidità del terreno;
+* necessità di irrigazione;
+* registro degli eventi di sistema.
+
+![Dashboard principale](images/dashboard-01.png)
+
+---
+
+### Monitoraggio dei sensori
+
+La schermata dei sensori permette di visualizzare i valori rilevati dai dispositivi collegati al controller.
+
+![Monitoraggio sensori](images/dashboard-02.png)
+
+---
+
+### Gestione delle piante
+
+La sezione dedicata alle piante permette di utilizzare profili preconfigurati per associare parametri specifici alla gestione dell'irrigazione.
+
+![Gestione piante](images/dashboard-03.png)
+
+---
+
+### Controllo delle pompe
+
+La schermata delle pompe permette di monitorare e gestire gli attuatori dell'impianto.
+
+![Controllo pompe](images/dashboard-04.png)
+
+---
+
+### Monitoraggio del serbatoio
+
+La sezione dedicata al serbatoio permette di visualizzare il livello dell'acqua e lo stato del sistema di approvvigionamento.
+
+![Monitoraggio serbatoio](images/dashboard-05.png)
+
+---
+
+### Programmazione dell'irrigazione
+
+Il sistema permette di configurare programmi di irrigazione basati su orari e condizioni operative.
+
+![Programmazione irrigazione](images/dashboard-06.png)
+
+---
+
+### Configurazione del sistema
+
+La schermata di configurazione centralizza le principali impostazioni del sistema.
+
+Sono disponibili:
+
+* 🔐 Credenziali di accesso Web
+* 🧠 Modalità Smart autonoma
+* 📶 Configurazione Wi-Fi
+* 🔧 Configurazione avanzata
+* 🕐 Configurazione manuale dell'ora
+* 📱 Integrazione Telegram
+* ⛅ Meteo intelligente tramite OpenWeather
+* ⬆️ Aggiornamento firmware OTA
+* 🔧 Controlli di sistema
+* 🏭 Factory Reset
+
+![Configurazione sistema](images/dashboard-07.png)
+
+---
+
+### Identificazione del sistema
+
+Le interfacce riportano l'identificazione del progetto:
+
+**© 2026 TECH3D SYSTEM**
+**Progettato da Christian R. Scarparo**
 
 ---
 
@@ -345,17 +441,26 @@ esp32-smart-irrigation/
 │
 ├── README.md
 │
-└── docs/
-    ├── ARCHITECTURE.md
-    ├── DOCUMENTATION.md
-    └── architecture.svg
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── DOCUMENTATION.md
+│   └── architecture.svg
+│
+└── images/
+    ├── dashboard-01.png
+    ├── dashboard-02.png
+    ├── dashboard-03.png
+    ├── dashboard-04.png
+    ├── dashboard-05.png
+    ├── dashboard-06.png
+    └── dashboard-07.png
 ```
 
 Il repository non contiene il firmware sorgente. La struttura è stata organizzata come **portfolio tecnico**, con l'obiettivo di presentare il progetto, la sua architettura e le competenze tecniche utilizzate nello sviluppo.
 
 ---
 
-## Project Status
+## Stato del progetto
 
 **Piattaforma:** ESP32-S3
 **Display:** ST7789 320×240
