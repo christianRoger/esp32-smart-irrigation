@@ -1,62 +1,62 @@
 # ESP32 Smart Irrigation
 
-## Smart IoT Irrigation System
+## Sistema di irrigazione IoT intelligente
 
-A smart irrigation controller developed around the **ESP32-S3**, combining embedded electronics, sensors, automation, remote connectivity and an interactive touch interface.
+Sistema di controllo dell'irrigazione sviluppato su **ESP32-S3**, che integra elettronica embedded, sensori, automazione, connettività remota e un'interfaccia touch interattiva.
 
-The project was designed as a complete IoT system capable of monitoring environmental conditions, controlling irrigation pumps and adapting irrigation cycles according to soil conditions and weather information.
+Il progetto è stato sviluppato come un sistema IoT completo, in grado di monitorare le condizioni del terreno e dell'ambiente, controllare le pompe di irrigazione e adattare i cicli di irrigazione in base ai dati rilevati e alle informazioni meteorologiche.
 
-> **Note:** The source code is not included in this repository. This repository is intended as a technical portfolio and project documentation.
+> **Nota:** il codice sorgente non è incluso in questo repository. Il repository è stato creato come **portfolio tecnico** e documentazione del progetto.
 
 ---
 
-## Project Overview
+## Panoramica del progetto
 
-The system combines hardware control, embedded software and IoT connectivity in a single irrigation platform.
+Il sistema integra controllo hardware, firmware embedded e connettività IoT in un'unica piattaforma per la gestione automatizzata dell'irrigazione.
 
-The controller manages:
+Il controller gestisce:
 
-* 💧 Automated irrigation pumps
-* 🌱 Soil moisture monitoring
-* 🌡️ Temperature and humidity monitoring
-* 🚰 Water reservoir level monitoring
-* 🖥️ TFT touch-screen interface
-* 📡 Wi-Fi connectivity
-* 🌐 Embedded Web Server
-* 📱 Telegram remote control and notifications
-* 🔗 ESP-NOW communication
-* ☁️ OpenWeatherMap integration
-* 🔄 OTA firmware updates
-* 🤖 Adaptive SMART irrigation logic
-* 🛡️ Watchdog and security mechanisms
+* 💧 Pompe di irrigazione automatiche
+* 🌱 Monitoraggio dell'umidità del terreno
+* 🌡️ Temperatura e umidità ambientale
+* 🚰 Monitoraggio del livello del serbatoio
+* 🖥️ Interfaccia TFT touch
+* 📡 Connettività Wi-Fi
+* 🌐 Web Server embedded
+* 📱 Controllo remoto e notifiche tramite Telegram
+* 🔗 Comunicazione ESP-NOW
+* ☁️ Integrazione con OpenWeatherMap
+* 🔄 Aggiornamento firmware OTA
+* 🤖 Logica SMART adattiva per l'irrigazione
+* 🛡️ Watchdog e meccanismi di sicurezza
 
 ---
 
 ## Hardware
 
-### Main Controller
+### Controller principale
 
 * ESP32-S3
-* ST7789 TFT display — 320×240
-* XPT2046 resistive touch controller
-* DS3231 RTC
+* Display TFT ST7789 — 320×240
+* Touch resistivo XPT2046
+* RTC DS3231
 
-### Sensors
+### Sensori
 
-* 2× soil moisture sensors
-* DHT11 temperature/humidity sensor
-* HC-SR04 ultrasonic water-level sensor
+* 2× sensori di umidità del terreno
+* Sensore DHT11 per temperatura e umidità
+* Sensore ultrasonico HC-SR04 per il livello dell'acqua
 
-### Actuators
+### Attuatori
 
-* 2× irrigation pumps
-* 1× well relay
+* 2× pompe di irrigazione
+* 1× relè per il pozzo
 * Buzzer
-* Status LEDs
+* LED di stato
 
 ---
 
-## Software & Technologies
+## Software e tecnologie
 
 * **C++**
 * **Arduino**
@@ -68,114 +68,124 @@ The controller manages:
 * **Telegram Bot API**
 * **OpenWeatherMap API**
 * **OTA Firmware Update**
-* **NVS persistent storage**
+* **NVS / Preferences**
 * **JSON**
 * **Watchdog**
 * **SHA-256**
-* **CSRF protection**
-* **Rate limiting**
+* **CSRF Protection**
+* **Rate Limiting**
 
 ---
 
-## SMART Irrigation
+## Irrigazione SMART
 
-One of the main features of the project is the adaptive **SMART irrigation system**.
+Una delle caratteristiche principali del progetto è la modalità **SMART**, progettata per rendere la gestione dell'irrigazione più adattiva.
 
-The controller analyzes the relationship between:
+Il controller analizza la relazione tra:
 
-* Pump operating time
-* Soil moisture before irrigation
-* Soil moisture after irrigation
+* tempo di funzionamento della pompa;
+* umidità del terreno prima dell'irrigazione;
+* umidità del terreno dopo l'irrigazione.
 
-Based on the collected data, the system can adapt irrigation duration to improve water management.
+Sulla base dei dati raccolti, il sistema può adattare la durata dei cicli di irrigazione, cercando di migliorare l'efficienza nell'utilizzo dell'acqua.
 
-The system can also take weather information into account and suspend automatic irrigation when rain is expected.
+La logica SMART può inoltre utilizzare le informazioni meteorologiche provenienti da **OpenWeatherMap** per sospendere automaticamente l'irrigazione quando è prevista pioggia.
 
 ---
 
-## User Interface
+## Interfaccia utente
 
-The controller features a graphical touch interface developed for the ST7789 display.
+Il controller dispone di un'interfaccia grafica touch sviluppata per il display **ST7789 320×240**.
 
-Main screens include:
+Le principali schermate includono:
 
 * Home
-* Water / Reservoir
-* Network
-* Weather
+* Acqua / Serbatoio
+* Rete
+* Meteo
 * SMART / AI
-* Schedule
-* Settings
+* Programmazione
+* Impostazioni
 
-The interface also includes animated elements, alerts, touch navigation and an on-screen keyboard.
+L'interfaccia comprende inoltre:
+
+* elementi grafici e animazioni;
+* navigazione tramite touch;
+* gesture swipe;
+* pulsanti touch;
+* schermate di allarme;
+* tastiera virtuale;
+* visualizzazione dello stato del sistema.
 
 ---
 
-## Remote Control
+## Controllo remoto
 
-The system provides multiple communication methods.
+Il sistema supporta diverse modalità di comunicazione e controllo remoto.
 
 ### Web Server
 
-The embedded Web Server allows monitoring and configuration directly from a browser.
+Il Web Server embedded permette di monitorare e configurare il dispositivo direttamente tramite browser.
 
-Functions include:
+Le principali funzioni includono:
 
-* System status
-* Manual pump control
-* Irrigation scheduling
-* Wi-Fi configuration
-* Sensor calibration
-* Plant profiles
-* SMART configuration
-* Weather configuration
-* System logs
-* OTA firmware update
+* visualizzazione dello stato del sistema;
+* controllo manuale delle pompe;
+* programmazione dell'irrigazione;
+* configurazione Wi-Fi;
+* calibrazione dei sensori;
+* gestione dei profili delle piante;
+* configurazione della modalità SMART;
+* configurazione meteorologica;
+* gestione dei log;
+* aggiornamento firmware OTA;
+* configurazione e reset del sistema.
 
 ### Telegram
 
-Telegram integration allows remote notifications and commands.
+L'integrazione con Telegram permette di ricevere notifiche e inviare comandi al sistema da remoto.
 
 ### ESP-NOW
 
-ESP-NOW is used for communication with remote ESP-based sensors or devices.
+ESP-NOW viene utilizzato per la comunicazione con sensori e dispositivi ESP remoti, permettendo di estendere il sistema con nodi distribuiti.
 
 ---
 
-## Reliability & Security
+## Affidabilità e sicurezza
 
-The firmware includes several mechanisms designed to improve reliability and security:
+Il firmware integra diversi meccanismi progettati per migliorare l'affidabilità e la sicurezza del sistema:
 
-* Hardware watchdog
-* Password-protected access
-* SHA-256 password hashing
-* CSRF protection
-* Rate limiting
-* OTA protection
-* Factory reset
-* Persistent configuration using NVS
+* Hardware Watchdog
+* Accesso protetto tramite password
+* Hashing della password con SHA-256
+* Protezione CSRF
+* Rate Limiting
+* Protezione degli aggiornamenti OTA
+* Factory Reset
+* Configurazioni persistenti tramite NVS
+* Gestione delle condizioni anomale del sistema
 
 ---
 
-## Architecture
+## Architettura
 
-The original firmware was initially developed as a large monolithic sketch.
+Il firmware è stato inizialmente sviluppato come uno sketch monolitico di grandi dimensioni.
 
-As the project evolved, the software architecture was reorganized into functional modules covering:
+Con l'evoluzione del progetto, l'architettura software è stata riorganizzata in moduli funzionali, separando le principali responsabilità del sistema.
 
 ```text
                     ESP32-S3
                        │
         ┌──────────────┼──────────────┐
         │              │              │
-     Sensors        Actuators      User Interface
+     Sensori        Attuatori      Interfaccia
         │              │              │
-   Soil / DHT11    Pumps / Relay   ST7789 + Touch
-   HC-SR04         Buzzer / LEDs
+   Suolo / DHT11   Pompe / Relè    ST7789 + Touch
+   HC-SR04         Buzzer / LED
         │
         └──────────────┬──────────────┘
                        │
-                  Control Logic
+                  Logica di controllo
                        │
               ┌────────┼────────┐
               │        │        │
@@ -186,44 +196,100 @@ As the project evolved, the software architecture was reorganized into functiona
           SMART Logic
 ```
 
+Per una descrizione completa dell'architettura software, dei flussi di dati e delle interazioni tra i moduli:
+
+➡️ **[Visualizza la documentazione completa dell'architettura](docs/ARCHITECTURE.md)**
+
 ---
 
-## Key Engineering Areas
+## Principali aree tecniche
 
-This project demonstrates practical experience in:
+Il progetto dimostra esperienza pratica nelle seguenti aree:
 
-* Embedded systems development
-* Microcontroller programming
-* Electronics and hardware integration
-* Sensor acquisition
-* Actuator control
-* SPI and I²C communication
-* ADC measurement and calibration
-* Wi-Fi networking
-* IoT communication
-* Web interfaces
-* Remote device management
-* OTA firmware updates
-* Real-time task management
-* Embedded security
-* System diagnostics
-* Hardware/software integration
+* Sviluppo di sistemi embedded
+* Programmazione di microcontrollori
+* Programmazione C++
+* Integrazione hardware e software
+* Acquisizione dati da sensori
+* Controllo di attuatori
+* Comunicazione SPI e I²C
+* Letture ADC e calibrazione dei sensori
+* Networking Wi-Fi
+* Comunicazione IoT
+* Web Server embedded
+* Interfacce grafiche touch
+* Comunicazione ESP-NOW
+* Gestione remota dei dispositivi
+* Aggiornamenti firmware OTA
+* Gestione di task real-time
+* Sicurezza embedded
+* Diagnostica del sistema
+* Automazione
+* Integrazione hardware/software
+
+---
+
+## Architettura hardware e software
+
+Il sistema segue una struttura a più livelli:
+
+```text
+┌───────────────────────────────────────┐
+│             USER INTERFACE            │
+│        TFT Touch / Web / Telegram     │
+└───────────────────┬───────────────────┘
+                    │
+┌───────────────────▼───────────────────┐
+│          CONTROL & SMART LOGIC        │
+│     Irrigation / Scheduling / AI      │
+└───────────────────┬───────────────────┘
+                    │
+┌───────────────────▼───────────────────┐
+│          SENSOR / HARDWARE            │
+│ Soil / DHT11 / HC-SR04 / RTC / Relays│
+└───────────────────┬───────────────────┘
+                    │
+┌───────────────────▼───────────────────┐
+│              ESP32-S3                 │
+│        Embedded Control Platform      │
+└───────────────────────────────────────┘
+```
+
+Questa separazione permette di mantenere distinti acquisizione dati, logica di controllo, interfaccia utente e comunicazione, facilitando manutenzione ed evoluzione del sistema.
 
 ---
 
 ## Project Status
 
-**Platform:** ESP32-S3
+**Piattaforma:** ESP32-S3
 **Display:** ST7789 320×240
 **Touch:** XPT2046
-**Development environment:** Arduino IDE
+**Ambiente di sviluppo:** Arduino IDE
 **Firmware:** C++
-**Project type:** Embedded / IoT / Automation
+**Architettura:** Firmware modulare
+**Tipologia:** Embedded / IoT / Automazione
 
 ---
 
-## About
+## Obiettivo del progetto
 
-This project was developed as a practical embedded systems project, combining electronics, firmware development, automation and IoT technologies into a complete working platform.
+Il progetto è stato sviluppato come applicazione pratica di **sistemi embedded, automazione ed IoT**, combinando elettronica e sviluppo firmware in un'unica piattaforma.
 
-The repository documents the project architecture and technical capabilities without exposing the source code.
+L'obiettivo è realizzare un sistema di irrigazione capace non solo di eseguire comandi predefiniti, ma anche di:
+
+* acquisire dati dal campo;
+* prendere decisioni in base alle condizioni rilevate;
+* controllare autonomamente gli attuatori;
+* comunicare con dispositivi remoti;
+* fornire interfacce locali e remote;
+* utilizzare dati meteorologici;
+* adattare il comportamento dell'irrigazione;
+* mantenere configurazioni e parametri nel tempo.
+
+---
+
+## Portfolio tecnico
+
+Questo repository rappresenta una sintesi delle competenze applicate nello sviluppo del progetto, tra cui **elettronica, firmware embedded, automazione, IoT, networking, interfacce utente e integrazione hardware/software**.
+
+Il codice sorgente non viene pubblicato; la documentazione è fornita per illustrare l'architettura, le funzionalità e le principali scelte tecniche del sistema.
