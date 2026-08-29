@@ -420,9 +420,10 @@ Il codice sorgente non viene pubblicato; la documentazione è fornita per illust
 
 ## Documentazione
 
-Per approfondire il progetto:
+Per approfondire l'architettura e le caratteristiche tecniche del progetto:
 
-📐 **[Architettura e documentazione tecnica](docs/DOCUMENTAZIONE.md)**
+- 📐 [Architettura del sistema](docs/ARCHITECTURE.md)
+- 📘 [Documentazione tecnica](docs/DOCUMENTATION.md)
 
 La documentazione comprende:
 
