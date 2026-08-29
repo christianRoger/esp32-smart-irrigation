@@ -290,7 +290,7 @@ Sono visualizzati:
 * necessità di irrigazione;
 * registro degli eventi di sistema.
 
-![Dashboard principale](images/dashboard-01.png)
+![Dashboard principale](images/dashboard-01.jpg)
 
 ---
 
@@ -298,7 +298,7 @@ Sono visualizzati:
 
 La schermata dei sensori permette di visualizzare i valori rilevati dai dispositivi collegati al controller.
 
-![Monitoraggio sensori](images/dashboard-02.png)
+![Monitoraggio sensori](images/dashboard-02.jpg)
 
 ---
 
@@ -306,7 +306,7 @@ La schermata dei sensori permette di visualizzare i valori rilevati dai disposit
 
 La sezione dedicata alle piante permette di utilizzare profili preconfigurati per associare parametri specifici alla gestione dell'irrigazione.
 
-![Gestione piante](images/dashboard-03.png)
+![Gestione piante](images/dashboard-03.jpg)
 
 ---
 
@@ -314,7 +314,7 @@ La sezione dedicata alle piante permette di utilizzare profili preconfigurati pe
 
 La schermata delle pompe permette di monitorare e gestire gli attuatori dell'impianto.
 
-![Controllo pompe](images/dashboard-04.png)
+![Controllo pompe](images/dashboard-04.jpg)
 
 ---
 
@@ -322,7 +322,7 @@ La schermata delle pompe permette di monitorare e gestire gli attuatori dell'imp
 
 La sezione dedicata al serbatoio permette di visualizzare il livello dell'acqua e lo stato del sistema di approvvigionamento.
 
-![Monitoraggio serbatoio](images/dashboard-05.png)
+![Monitoraggio serbatoio](images/dashboard-05.jpg)
 
 ---
 
@@ -330,7 +330,7 @@ La sezione dedicata al serbatoio permette di visualizzare il livello dell'acqua 
 
 Il sistema permette di configurare programmi di irrigazione basati su orari e condizioni operative.
 
-![Programmazione irrigazione](images/dashboard-06.png)
+![Programmazione irrigazione](images/dashboard-06.jpg)
 
 ---
 
@@ -351,7 +351,7 @@ Sono disponibili:
 * 🔧 Controlli di sistema
 * 🏭 Factory Reset
 
-![Configurazione sistema](images/dashboard-07.png)
+![Configurazione sistema](images/dashboard-07.jpg)
 
 ---
 
