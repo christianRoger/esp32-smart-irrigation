@@ -500,3 +500,11 @@ Questo repository rappresenta una sintesi delle competenze applicate nello svilu
 **Elettronica → Firmware → Automazione → IoT → Networking → Interfaccia utente → Integrazione hardware/software**
 
 Il codice sorgente non viene pubblicato. La documentazione è fornita per illustrare l'architettura, le funzionalità e le principali soluzioni tecniche adottate durante lo sviluppo.
+
+## 🔗 Remote Control
+
+Il sistema può essere controllato e monitorato anche tramite il pannello remoto **Tech3D Remote Control**.
+
+👉 [Tech3D Remote Control](https://github.com/christianRoger/remote-control)
+
+Il Remote Control utilizza un ESP32 con display TFT 320×240 e touch resistivo e comunica con l'unità principale tramite **ESP-NOW**.
