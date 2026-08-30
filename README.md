@@ -122,22 +122,22 @@ Questa architettura permette di gestire il dispositivo sia localmente tramite di
 
 ---
 
-## Hardware
+# Hardware
 
-### Controller principale
+## Controller principale
 
 * ESP32-S3 Dual-Core
 * Display TFT ST7789 — 320×240
 * Touch resistivo XPT2046
 * RTC DS3231
 
-### Sensori
+## Sensori
 
 * 2× sensori di umidità del terreno
 * DHT11 per temperatura e umidità
 * HC-SR04 per il rilevamento del livello dell'acqua
 
-### Attuatori
+## Attuatori
 
 * 2× pompe di irrigazione
 * 1× relè per il pozzo
@@ -146,7 +146,7 @@ Questa architettura permette di gestire il dispositivo sia localmente tramite di
 
 ---
 
-## Software e tecnologie
+# Software e tecnologie
 
 * **C++**
 * **Arduino**
@@ -167,7 +167,7 @@ Questa architettura permette di gestire il dispositivo sia localmente tramite di
 
 ---
 
-## Interfaccia utente
+# Interfaccia utente
 
 L'interfaccia grafica è progettata per permettere il controllo locale del sistema direttamente dal dispositivo.
 
@@ -193,9 +193,86 @@ Funzionalità dell'interfaccia:
 
 ---
 
-## Controllo remoto
+# 🖥️ Interfaccia del Display TFT
 
-### Web Server
+Il sistema dispone di un'interfaccia locale basata su display **TFT 320×240 con touch resistivo**, progettata per consentire il controllo e il monitoraggio diretto dell'impianto.
+
+Le diverse schermate permettono di visualizzare lo stato del sistema, controllare le pompe, monitorare il livello dell'acqua, configurare la programmazione, consultare le informazioni meteorologiche e gestire la modalità SMART.
+
+## Schermate dell'interfaccia
+
+| Schermata  | Descrizione                    |
+| ---------- | ------------------------------ |
+| Display 01 | Interfaccia principale         |
+| Display 02 | Stato del sistema              |
+| Display 03 | Gestione acqua / serbatoio     |
+| Display 04 | Programmazione irrigazione     |
+| Display 05 | Informazioni meteorologiche    |
+| Display 06 | Modalità SMART                 |
+| Display 07 | Impostazioni sistema           |
+| Display 08 | Informazioni di rete / sistema |
+
+## Galleria
+
+### Display 01
+
+![Display 01](images/display-01.jpeg)
+
+### Display 02
+
+![Display 02](images/display-02.jpeg)
+
+### Display 03
+
+![Display 03](images/display-03.jpeg)
+
+### Display 04
+
+![Display 04](images/display-04.jpeg)
+
+### Display 05
+
+![Display 05](images/display-05.jpeg)
+
+### Display 06
+
+![Display 06](images/display-06.jpeg)
+
+### Display 07
+
+![Display 07](images/display-07.jpeg)
+
+### Display 08
+
+![Display 08](images/display-08.jpeg)
+
+---
+
+# 🔧 Prototipazione e Hardware
+
+Il progetto comprende anche la fase di prototipazione hardware e sviluppo della scheda elettronica.
+
+La fase di sviluppo ha incluso:
+
+* prototipazione del sistema;
+* integrazione dei componenti elettronici;
+* verifica dell'interfaccia hardware;
+* sviluppo e validazione della PCB;
+* integrazione tra elettronica e firmware.
+
+## Prototipo
+
+![Prototipo del sistema](images/prototype-01.jpeg)
+
+## PCB
+
+![PCB del sistema](images/pcb.jpeg)
+
+---
+
+# Controllo remoto
+
+## Web Server
 
 Il Web Server integrato permette di accedere al sistema tramite browser attraverso la rete Wi-Fi.
 
@@ -213,7 +290,9 @@ Le principali funzioni comprendono:
 * aggiornamento firmware OTA;
 * configurazione e reset del sistema.
 
-### Telegram
+---
+
+## Telegram
 
 L'integrazione con Telegram permette di:
 
@@ -222,59 +301,23 @@ L'integrazione con Telegram permette di:
 * inviare comandi da remoto;
 * ricevere informazioni sullo stato del dispositivo.
 
-### ESP-NOW
+---
+
+## ESP-NOW
 
 ESP-NOW viene utilizzato per la comunicazione con dispositivi ESP remoti.
 
-Questa funzionalità permette di estendere il sistema attraverso nodi distribuiti, ad esempio sensori remoti.
+Questa funzionalità permette di estendere il sistema attraverso nodi distribuiti e dispositivi di controllo remoto.
 
 ---
 
-## Affidabilità e sicurezza
-
-Il firmware integra diversi meccanismi per migliorare l'affidabilità e la sicurezza del sistema.
-
-### Sicurezza
-
-* autenticazione tramite password;
-* hashing SHA-256;
-* protezione CSRF;
-* rate limiting;
-* protezione delle operazioni sensibili;
-* protezione dell'aggiornamento OTA.
-
-### Affidabilità
-
-* Hardware Watchdog;
-* gestione delle condizioni anomale;
-* factory reset;
-* configurazione persistente;
-* monitoraggio dei sensori;
-* gestione del livello del serbatoio.
-
----
-
-## Architettura del sistema
-
-Il firmware utilizza un'architettura modulare che separa le principali responsabilità del sistema:
-
-**Acquisizione → Elaborazione → Decisione → Azionamento → Monitoraggio**
-
-![Architettura del sistema](docs/architecture.svg)
-
-Per una descrizione dettagliata dei moduli software, dei flussi di dati, dell'esecuzione runtime e delle interazioni tra hardware e firmware:
-
-👉 [Visualizza l'architettura completa](docs/ARCHITECTURE.md)
-
----
-
-## 🖥️ Interfaccia Web
+# 🖥️ Interfaccia Web
 
 Il sistema dispone di un'interfaccia Web integrata progettata per consentire il monitoraggio, la configurazione e il controllo remoto dell'impianto di irrigazione.
 
 L'interfaccia è accessibile tramite browser attraverso la rete Wi-Fi del dispositivo.
 
-### Dashboard principale
+## Dashboard principale
 
 La dashboard principale fornisce una panoramica dello stato del sistema in tempo reale.
 
@@ -294,7 +337,7 @@ Sono visualizzati:
 
 ---
 
-### Monitoraggio dei sensori
+## Monitoraggio dei sensori
 
 La schermata dei sensori permette di visualizzare i valori rilevati dai dispositivi collegati al controller.
 
@@ -302,7 +345,7 @@ La schermata dei sensori permette di visualizzare i valori rilevati dai disposit
 
 ---
 
-### Gestione delle piante
+## Gestione delle piante
 
 La sezione dedicata alle piante permette di utilizzare profili preconfigurati per associare parametri specifici alla gestione dell'irrigazione.
 
@@ -310,7 +353,7 @@ La sezione dedicata alle piante permette di utilizzare profili preconfigurati pe
 
 ---
 
-### Controllo delle pompe
+## Controllo delle pompe
 
 La schermata delle pompe permette di monitorare e gestire gli attuatori dell'impianto.
 
@@ -318,7 +361,7 @@ La schermata delle pompe permette di monitorare e gestire gli attuatori dell'imp
 
 ---
 
-### Monitoraggio del serbatoio
+## Monitoraggio del serbatoio
 
 La sezione dedicata al serbatoio permette di visualizzare il livello dell'acqua e lo stato del sistema di approvvigionamento.
 
@@ -326,7 +369,7 @@ La sezione dedicata al serbatoio permette di visualizzare il livello dell'acqua 
 
 ---
 
-### Programmazione dell'irrigazione
+## Programmazione dell'irrigazione
 
 Il sistema permette di configurare programmi di irrigazione basati su orari e condizioni operative.
 
@@ -334,7 +377,7 @@ Il sistema permette di configurare programmi di irrigazione basati su orari e co
 
 ---
 
-### Configurazione del sistema
+## Configurazione del sistema
 
 La schermata di configurazione centralizza le principali impostazioni del sistema.
 
@@ -355,16 +398,45 @@ Sono disponibili:
 
 ---
 
-### Identificazione del sistema
+# 🔐 Affidabilità e sicurezza
 
-Le interfacce riportano l'identificazione del progetto:
+Il firmware integra diversi meccanismi per migliorare l'affidabilità e la sicurezza del sistema.
 
-**© 2026 TECH3D SYSTEM**
-**Progettato da Christian R. Scarparo**
+## Sicurezza
+
+* autenticazione tramite password;
+* hashing SHA-256;
+* protezione CSRF;
+* rate limiting;
+* protezione delle operazioni sensibili;
+* protezione dell'aggiornamento OTA.
+
+## Affidabilità
+
+* Hardware Watchdog;
+* gestione delle condizioni anomale;
+* factory reset;
+* configurazione persistente;
+* monitoraggio dei sensori;
+* gestione del livello del serbatoio.
 
 ---
 
-## Principali aree tecniche
+# 🏗️ Architettura del sistema
+
+Il firmware utilizza un'architettura modulare che separa le principali responsabilità del sistema:
+
+**Acquisizione → Elaborazione → Decisione → Azionamento → Monitoraggio**
+
+![Architettura del sistema](docs/architecture.svg)
+
+Per una descrizione dettagliata dei moduli software, dei flussi di dati, dell'esecuzione runtime e delle interazioni tra hardware e firmware:
+
+👉 [Visualizza l'architettura completa](docs/ARCHITECTURE.md)
+
+---
+
+# Principali aree tecniche
 
 Il progetto dimostra esperienza pratica nelle seguenti aree:
 
@@ -393,7 +465,7 @@ Il progetto dimostra esperienza pratica nelle seguenti aree:
 
 ---
 
-## Principali sfide tecniche
+# Principali sfide tecniche
 
 Durante lo sviluppo sono state affrontate diverse problematiche tecniche, tra cui:
 
@@ -410,23 +482,35 @@ Durante lo sviluppo sono state affrontate diverse problematiche tecniche, tra cu
 
 ---
 
-## Documentazione tecnica
+# 🔗 Remote Control
+
+Il sistema può essere controllato e monitorato anche tramite il pannello remoto **Tech3D Remote Control**.
+
+👉 [Tech3D Remote Control](https://github.com/christianRoger/remote-control)
+
+Il Remote Control utilizza un ESP32 con display TFT 320×240 e touch resistivo e comunica con l'unità principale tramite **ESP-NOW**.
+
+Il progetto Remote Control è mantenuto in un repository separato per documentare l'interfaccia remota, l'architettura di comunicazione e le funzionalità del pannello di controllo.
+
+---
+
+# Documentazione tecnica
 
 Il repository contiene documentazione separata per facilitare la consultazione del progetto.
 
-### Architettura
+## Architettura
 
 👉 [ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 Documentazione dell'architettura hardware e software, dei moduli firmware, dei flussi di dati, delle attività runtime e delle comunicazioni tra i componenti.
 
-### Documentazione tecnica
+## Documentazione tecnica
 
 👉 [DOCUMENTATION.md](docs/DOCUMENTATION.md)
 
 Documentazione tecnica dettagliata relativa all'hardware, alle funzionalità, alla configurazione e agli aspetti implementativi del sistema.
 
-### Diagramma dell'architettura
+## Diagramma dell'architettura
 
 👉 [architecture.svg](docs/architecture.svg)
 
@@ -434,7 +518,7 @@ Diagramma visuale dell'architettura complessiva del sistema.
 
 ---
 
-## Struttura del repository
+# Struttura del repository
 
 ```text
 esp32-smart-irrigation/
@@ -447,34 +531,56 @@ esp32-smart-irrigation/
 │   └── architecture.svg
 │
 └── images/
-    ├── dashboard-01.png
-    ├── dashboard-02.png
-    ├── dashboard-03.png
-    ├── dashboard-04.png
-    ├── dashboard-05.png
-    ├── dashboard-06.png
-    └── dashboard-07.png
+    ├── dashboard-01.jpg
+    ├── dashboard-02.jpg
+    ├── dashboard-03.jpg
+    ├── dashboard-04.jpg
+    ├── dashboard-05.jpg
+    ├── dashboard-06.jpg
+    ├── dashboard-07.jpg
+    ├── display-01.jpeg
+    ├── display-02.jpeg
+    ├── display-03.jpeg
+    ├── display-04.jpeg
+    ├── display-05.jpeg
+    ├── display-06.jpeg
+    ├── display-07.jpeg
+    ├── display-08.jpeg
+    ├── pcb.jpeg
+    └── prototype-01.jpeg
 ```
 
 Il repository non contiene il firmware sorgente. La struttura è stata organizzata come **portfolio tecnico**, con l'obiettivo di presentare il progetto, la sua architettura e le competenze tecniche utilizzate nello sviluppo.
 
 ---
 
-## Stato del progetto
+# Identificazione del sistema
 
-**Piattaforma:** ESP32-S3
-**Display:** ST7789 320×240
-**Touch:** XPT2046
-**RTC:** DS3231
-**Ambiente di sviluppo:** Arduino IDE
-**Firmware:** C++
-**Architettura:** Firmware modulare
-**Comunicazione:** Wi-Fi / ESP-NOW / Telegram
-**Tipologia:** Embedded / IoT / Automazione
+Le interfacce riportano l'identificazione del progetto:
+
+**© 2026 TECH3D SYSTEM**
+**Progettato da Christian R. Scarparo**
 
 ---
 
-## Obiettivo del progetto
+# Stato del progetto
+
+| Parametro            | Stato                                    |
+| -------------------- | ---------------------------------------- |
+| Piattaforma          | ESP32-S3                                 |
+| Display              | ST7789 320×240                           |
+| Touch                | XPT2046                                  |
+| RTC                  | DS3231                                   |
+| Ambiente di sviluppo | Arduino IDE                              |
+| Firmware             | C++                                      |
+| Architettura         | Firmware modulare                        |
+| Comunicazione        | Wi-Fi / ESP-NOW / Telegram               |
+| Tipologia            | Embedded / IoT / Automazione             |
+| Stato                | Progetto funzionante / Portfolio tecnico |
+
+---
+
+# Obiettivo del progetto
 
 Il progetto è stato sviluppato come applicazione pratica di **sistemi embedded, automazione e IoT**, combinando elettronica, firmware e comunicazione di rete in un'unica piattaforma.
 
@@ -493,18 +599,10 @@ L'obiettivo è realizzare un sistema di irrigazione capace di:
 
 ---
 
-## Portfolio tecnico
+# Portfolio tecnico
 
 Questo repository rappresenta una sintesi delle competenze applicate nello sviluppo del progetto:
 
 **Elettronica → Firmware → Automazione → IoT → Networking → Interfaccia utente → Integrazione hardware/software**
 
 Il codice sorgente non viene pubblicato. La documentazione è fornita per illustrare l'architettura, le funzionalità e le principali soluzioni tecniche adottate durante lo sviluppo.
-
-## 🔗 Remote Control
-
-Il sistema può essere controllato e monitorato anche tramite il pannello remoto **Tech3D Remote Control**.
-
-👉 [Tech3D Remote Control](https://github.com/christianRoger/remote-control)
-
-Il Remote Control utilizza un ESP32 con display TFT 320×240 e touch resistivo e comunica con l'unità principale tramite **ESP-NOW**.
